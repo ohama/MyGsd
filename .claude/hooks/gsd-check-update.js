@@ -5,10 +5,11 @@
  * Checks for GSD updates in background, writes result to cache.
  * Called by SessionStart hook - runs once per session.
  *
- * Improvements:
+ * Features:
  * - 24-hour cache TTL (skip check if recent)
- * - Error logging to cache file
+ * - Centralized error logging via gsd-logger
  * - Graceful fallback on failures
+ * - Proper semver comparison
  */
 
 const fs = require('fs');
@@ -16,11 +17,23 @@ const path = require('path');
 const os = require('os');
 const { spawn } = require('child_process');
 
+// Try to load logger (may not exist in older installations)
+let logger;
+try {
+  logger = require('./gsd-logger');
+} catch {
+  logger = {
+    info: () => {},
+    error: () => {},
+    debug: () => {}
+  };
+}
+
 const homeDir = os.homedir();
 const cwd = process.cwd();
 const cacheDir = path.join(homeDir, '.claude', 'cache');
 const cacheFile = path.join(cacheDir, 'gsd-update-check.json');
-const logFile = path.join(cacheDir, 'gsd-update-check.log');
+const logDir = path.join(homeDir, '.claude', 'logs');
 
 // Cache TTL in seconds (24 hours)
 const CACHE_TTL_SECONDS = 24 * 60 * 60;
@@ -37,22 +50,37 @@ if (!fs.existsSync(cacheDir)) {
 // Check if cache is still valid
 function isCacheValid() {
   if (!fs.existsSync(cacheFile)) {
+    logger.debug('gsd-check-update', 'Cache file not found, will check');
     return false;
   }
   try {
     const cache = JSON.parse(fs.readFileSync(cacheFile, 'utf8'));
     const age = Math.floor(Date.now() / 1000) - (cache.checked || 0);
-    return age < CACHE_TTL_SECONDS;
-  } catch {
+    const valid = age < CACHE_TTL_SECONDS;
+    logger.debug('gsd-check-update', `Cache age: ${Math.round(age/3600)}h, valid: ${valid}`);
+    return valid;
+  } catch (err) {
+    logger.error('gsd-check-update', 'Error reading cache', err);
     return false;
   }
 }
 
 // Skip if cache is still valid
 if (isCacheValid()) {
-  // Cache is fresh, no need to check again
+  logger.debug('gsd-check-update', 'Using cached result');
   process.exit(0);
 }
+
+logger.info('gsd-check-update', 'Starting update check');
+
+// Ensure log directory exists
+if (!fs.existsSync(logDir)) {
+  try {
+    fs.mkdirSync(logDir, { recursive: true });
+  } catch {}
+}
+
+const logFile = path.join(logDir, 'gsd-hooks.log');
 
 // Run check in background (spawn background process)
 const child = spawn(process.execPath, ['-e', `
@@ -64,9 +92,9 @@ const child = spawn(process.execPath, ['-e', `
   const projectVersionFile = ${JSON.stringify(projectVersionFile)};
   const globalVersionFile = ${JSON.stringify(globalVersionFile)};
 
-  function log(message) {
+  function log(level, message) {
     const timestamp = new Date().toISOString();
-    const logLine = timestamp + ' ' + message + '\\n';
+    const logLine = timestamp + ' [' + level.toUpperCase() + '] [gsd-check-update] ' + message + '\\n';
     try {
       fs.appendFileSync(logFile, logLine);
     } catch {}
@@ -84,7 +112,7 @@ const child = spawn(process.execPath, ['-e', `
       versionSource = 'global';
     }
   } catch (e) {
-    log('Error reading VERSION: ' + e.message);
+    log('error', 'Error reading VERSION: ' + e.message);
   }
 
   let latest = null;
@@ -98,7 +126,7 @@ const child = spawn(process.execPath, ['-e', `
     }).trim();
   } catch (e) {
     error = e.message;
-    log('Error checking npm: ' + error);
+    log('error', 'Error checking npm: ' + error);
   }
 
   // Compare versions properly (semver comparison)
@@ -127,7 +155,7 @@ const child = spawn(process.execPath, ['-e', `
   };
 
   fs.writeFileSync(cacheFile, JSON.stringify(result, null, 2));
-  log('Check complete: installed=' + installed + ' latest=' + (latest || 'unknown') + ' update=' + updateAvailable);
+  log('info', 'Check complete: installed=' + installed + ' latest=' + (latest || 'unknown') + ' update=' + updateAvailable);
 `], {
   stdio: 'ignore',
   detached: true,
