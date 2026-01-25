@@ -33,24 +33,13 @@ description: 버전 업그레이드, CHANGELOG 작성, 릴리스 커밋 생성
 
 ## Step 2: Find Current Version
 
-버전 소스 우선순위:
-
-1. `package.json` → `version` 필드
-2. `VERSION` 파일
-3. 최근 git tag (`v*` 패턴)
+버전 소스: `VERSION` 파일
 
 ```bash
-# package.json
-cat package.json 2>/dev/null | grep '"version"' | head -1
-
-# VERSION 파일
 cat VERSION 2>/dev/null
-
-# git tag
-git describe --tags --abbrev=0 2>/dev/null
 ```
 
-버전을 찾지 못하면 `0.0.0`에서 시작.
+VERSION 파일이 없으면 `0.0.0`에서 시작 (첫 릴리스는 `0.1.0`).
 
 ## Step 3: Calculate New Version
 
@@ -123,15 +112,9 @@ git log $(git describe --tags --abbrev=0 2>/dev/null || echo "")..HEAD --oneline
 
 CHANGELOG.md가 없으면 생성.
 
-### package.json (있는 경우)
+### VERSION
 
-```json
-{
-  "version": "X.Y.Z"
-}
-```
-
-### VERSION (있는 경우)
+VERSION 파일 생성 또는 업데이트:
 
 ```
 X.Y.Z
@@ -140,8 +123,7 @@ X.Y.Z
 ## Step 7: Create Release Commit
 
 ```bash
-git add CHANGELOG.md package.json VERSION 2>/dev/null
-git add -A  # 버전 관련 파일이 다른 곳에 있을 수 있음
+git add CHANGELOG.md VERSION
 
 git commit -m "release: vX.Y.Z
 
@@ -170,7 +152,7 @@ git tag -a vX.Y.Z -m "Release vX.Y.Z"
 
 ### Files Updated
 - CHANGELOG.md
-- package.json (있는 경우)
+- VERSION
 
 ### Git
 - Commit: [hash]
@@ -238,7 +220,7 @@ Claude: ## Release v1.2.4 준비 완료
 
 ### Files Updated
 - CHANGELOG.md
-- package.json
+- VERSION
 
 ### Git
 - Commit: abc1234
@@ -269,16 +251,17 @@ Claude: ## Release v2.0.0 준비 완료
 
 ## 예외 처리
 
-### 버전 파일 없음
+### VERSION 파일 없음 (첫 릴리스)
 
 ```markdown
-⚠️ 버전 파일을 찾을 수 없습니다.
+VERSION 파일이 없습니다. 첫 릴리스로 진행합니다.
 
-현재 버전을 0.0.0으로 가정합니다.
-새 버전: 0.0.1 (patch)
+새 버전: 0.1.0
 
 계속할까요?
 ```
+
+첫 릴리스는 항상 `0.1.0`으로 시작합니다.
 
 ### 커밋 없음
 
