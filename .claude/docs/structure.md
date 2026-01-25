@@ -94,7 +94,9 @@ Claude Code 통합 설정:
 
 #### 범용 명령어 (`commands/`)
 
+- `commit.md` - Git 초기화, .gitignore 관리, 스마트 커밋
 - `howto.md` - 개발 지식 기록 및 관리
+- `release.md` - 버전 업그레이드, CHANGELOG 작성, 릴리스 커밋
 
 ### 4. `skills/gsd/` (11개 스킬)
 
