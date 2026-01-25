@@ -40,19 +40,15 @@ Phase: $ARGUMENTS
 <process>
 0. **Resolve Model Profile**
 
-   Read model profile for agent spawning:
+   Read model profile and resolve agent models using the config helper:
    ```bash
-   MODEL_PROFILE=$(cat .planning/config.json 2>/dev/null | grep -o '"model_profile"[[:space:]]*:[[:space:]]*"[^"]*"' | grep -o '"[^"]*"$' | tr -d '"' || echo "balanced")
+   # Get models for this command's agents
+   EXECUTOR_MODEL=$(node .claude/hooks/gsd-config.js --model gsd-executor)
+   VERIFIER_MODEL=$(node .claude/hooks/gsd-config.js --model gsd-verifier)
    ```
 
-   Default to "balanced" if not set.
-
-   **Model lookup table:**
-
-   | Agent | quality | balanced | budget |
-   |-------|---------|----------|--------|
-   | gsd-executor | opus | sonnet | sonnet |
-   | gsd-verifier | sonnet | sonnet | haiku |
+   The helper reads `.planning/config.json`, applies the model profile, and returns the correct model.
+   Defaults to "balanced" profile if not set.
 
    Store resolved models for use in Task calls below.
 
@@ -97,7 +93,7 @@ Phase: $ARGUMENTS
    **If clean:** Continue to verification.
 
 7. **Verify phase goal**
-   Check config: `WORKFLOW_VERIFIER=$(cat .planning/config.json 2>/dev/null | grep -o '"verifier"[[:space:]]*:[[:space:]]*[^,}]*' | grep -o 'true\|false' || echo "true")`
+   Check config: `WORKFLOW_VERIFIER=$(node .claude/hooks/gsd-config.js workflow.verifier true)`
 
    **If `workflow.verifier` is `false`:** Skip to step 8 (treat as passed).
 

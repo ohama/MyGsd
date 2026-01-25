@@ -30,19 +30,15 @@ ls .planning/debug/*.md 2>/dev/null | grep -v resolved | head -5
 
 ## 0. Resolve Model Profile
 
-Read model profile for agent spawning:
+Read model profile and resolve agent model using the config helper:
 
 ```bash
-MODEL_PROFILE=$(cat .planning/config.json 2>/dev/null | grep -o '"model_profile"[[:space:]]*:[[:space:]]*"[^"]*"' | grep -o '"[^"]*"$' | tr -d '"' || echo "balanced")
+# Get model for debugger agent
+DEBUGGER_MODEL=$(node .claude/hooks/gsd-config.js --model gsd-debugger)
 ```
 
-Default to "balanced" if not set.
-
-**Model lookup table:**
-
-| Agent | quality | balanced | budget |
-|-------|---------|----------|--------|
-| gsd-debugger | opus | sonnet | sonnet |
+The helper reads `.planning/config.json`, applies the model profile, and returns the correct model.
+Defaults to "balanced" profile if not set.
 
 Store resolved model for use in Task calls below.
 

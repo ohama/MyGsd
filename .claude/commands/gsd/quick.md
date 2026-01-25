@@ -36,20 +36,16 @@ Orchestration is inline - no separate workflow file. Quick mode is deliberately 
 <process>
 **Step 0: Resolve Model Profile**
 
-Read model profile for agent spawning:
+Read model profile and resolve agent models using the config helper:
 
 ```bash
-MODEL_PROFILE=$(cat .planning/config.json 2>/dev/null | grep -o '"model_profile"[[:space:]]*:[[:space:]]*"[^"]*"' | grep -o '"[^"]*"$' | tr -d '"' || echo "balanced")
+# Get models for this command's agents
+PLANNER_MODEL=$(node .claude/hooks/gsd-config.js --model gsd-planner)
+EXECUTOR_MODEL=$(node .claude/hooks/gsd-config.js --model gsd-executor)
 ```
 
-Default to "balanced" if not set.
-
-**Model lookup table:**
-
-| Agent | quality | balanced | budget |
-|-------|---------|----------|--------|
-| gsd-planner | opus | opus | sonnet |
-| gsd-executor | opus | sonnet | sonnet |
+The helper reads `.planning/config.json`, applies the model profile, and returns the correct model.
+Defaults to "balanced" profile if not set.
 
 Store resolved models for use in Task calls below.
 
