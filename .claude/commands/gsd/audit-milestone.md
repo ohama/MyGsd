@@ -41,19 +41,15 @@ Glob: .planning/phases/*/*-VERIFICATION.md
 
 ## 0. Resolve Model Profile
 
-Read model profile for agent spawning:
+Read model profile and resolve agent model using the config helper:
 
 ```bash
-MODEL_PROFILE=$(cat .planning/config.json 2>/dev/null | grep -o '"model_profile"[[:space:]]*:[[:space:]]*"[^"]*"' | grep -o '"[^"]*"$' | tr -d '"' || echo "balanced")
+# Get model for integration checker agent
+INTEGRATION_CHECKER_MODEL=$(node .claude/hooks/gsd-config.js --model gsd-integration-checker)
 ```
 
-Default to "balanced" if not set.
-
-**Model lookup table:**
-
-| Agent | quality | balanced | budget |
-|-------|---------|----------|--------|
-| gsd-integration-checker | sonnet | sonnet | haiku |
+The helper reads `.planning/config.json`, applies the model profile, and returns the correct model.
+Defaults to "balanced" profile if not set.
 
 Store resolved model for use in Task call below.
 

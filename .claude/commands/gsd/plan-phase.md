@@ -53,18 +53,14 @@ ls .planning/ 2>/dev/null
 **Resolve model profile for agent spawning:**
 
 ```bash
-MODEL_PROFILE=$(cat .planning/config.json 2>/dev/null | grep -o '"model_profile"[[:space:]]*:[[:space:]]*"[^"]*"' | grep -o '"[^"]*"$' | tr -d '"' || echo "balanced")
+# Get models for this command's agents using config helper
+RESEARCHER_MODEL=$(node .claude/hooks/gsd-config.js --model gsd-phase-researcher)
+PLANNER_MODEL=$(node .claude/hooks/gsd-config.js --model gsd-planner)
+CHECKER_MODEL=$(node .claude/hooks/gsd-config.js --model gsd-plan-checker)
 ```
 
-Default to "balanced" if not set.
-
-**Model lookup table:**
-
-| Agent | quality | balanced | budget |
-|-------|---------|----------|--------|
-| gsd-phase-researcher | opus | sonnet | haiku |
-| gsd-planner | opus | opus | sonnet |
-| gsd-plan-checker | sonnet | sonnet | haiku |
+The helper reads `.planning/config.json`, applies the model profile, and returns the correct model.
+Defaults to "balanced" profile if not set.
 
 Store resolved models for use in Task calls below.
 

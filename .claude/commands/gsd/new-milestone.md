@@ -124,21 +124,17 @@ git commit -m "docs: start milestone v[X.Y] [Name]"
 
 ## Phase 6.5: Resolve Model Profile
 
-Read model profile for agent spawning:
+Read model profile and resolve agent models using the config helper:
 
 ```bash
-MODEL_PROFILE=$(cat .planning/config.json 2>/dev/null | grep -o '"model_profile"[[:space:]]*:[[:space:]]*"[^"]*"' | grep -o '"[^"]*"$' | tr -d '"' || echo "balanced")
+# Get models for this command's agents
+RESEARCHER_MODEL=$(node .claude/hooks/gsd-config.js --model gsd-project-researcher)
+SYNTHESIZER_MODEL=$(node .claude/hooks/gsd-config.js --model gsd-research-synthesizer)
+ROADMAPPER_MODEL=$(node .claude/hooks/gsd-config.js --model gsd-roadmapper)
 ```
 
-Default to "balanced" if not set.
-
-**Model lookup table:**
-
-| Agent | quality | balanced | budget |
-|-------|---------|----------|--------|
-| gsd-project-researcher | opus | sonnet | haiku |
-| gsd-research-synthesizer | sonnet | sonnet | haiku |
-| gsd-roadmapper | opus | sonnet | sonnet |
+The helper reads `.planning/config.json`, applies the model profile, and returns the correct model.
+Defaults to "balanced" profile if not set.
 
 Store resolved models for use in Task calls below.
 
