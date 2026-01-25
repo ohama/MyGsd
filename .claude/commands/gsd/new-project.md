@@ -47,7 +47,29 @@ This is the most leveraged moment in any project. Deep questioning here means be
    [ -f .planning/PROJECT.md ] && echo "ERROR: Project already initialized. Use /gsd:progress" && exit 1
    ```
 
-2. **Initialize git repo in THIS directory** (required even if inside a parent repo):
+2. **Check existing git files:**
+   ```bash
+   HAS_GIT=$([ -d .git ] && echo "yes")
+   HAS_GITIGNORE=$([ -f .gitignore ] && echo "yes")
+   ```
+
+   **If .git or .gitignore exists**, use AskUserQuestion:
+   - header: "Git Files"
+   - question: "Existing git files detected. How would you like to proceed?"
+   - options:
+     - "Keep" — Preserve .git and .gitignore (continue existing history)
+     - "Remove" — Delete and start fresh (new git history)
+
+   **If "Remove":**
+   ```bash
+   rm -rf .git
+   rm -f .gitignore
+   echo "Removed existing git files"
+   ```
+
+   **If "Keep":** Continue with existing files.
+
+3. **Initialize git repo** (if not exists):
    ```bash
    if [ -d .git ] || [ -f .git ]; then
        echo "Git repo exists in current directory"
@@ -57,7 +79,7 @@ This is the most leveraged moment in any project. Deep questioning here means be
    fi
    ```
 
-3. **Detect existing code (brownfield detection):**
+4. **Detect existing code (brownfield detection):**
    ```bash
    CODE_FILES=$(find . -name "*.ts" -o -name "*.js" -o -name "*.py" -o -name "*.go" -o -name "*.rs" -o -name "*.swift" -o -name "*.java" 2>/dev/null | grep -v node_modules | grep -v .git | head -20)
    HAS_PACKAGE=$([ -f package.json ] || [ -f requirements.txt ] || [ -f Cargo.toml ] || [ -f go.mod ] || [ -f Package.swift ] && echo "yes")

@@ -20,15 +20,28 @@ rm -rf .planning/
 # 프로젝트별 문서
 rm -rf docs/howto/
 
-# Git 태그 제거 (로컬)
-git tag -l | xargs -r git tag -d 2>/dev/null || true
+# Git 관련 파일 (사용자 확인 후 제거)
+GIT_CLEANED=""
+if [ -d .git ] || [ -f .gitignore ]; then
+    echo ""
+    echo "⚠️  Git 관련 파일이 있습니다:"
+    [ -d .git ] && echo "   - .git/ (git history)"
+    [ -f .gitignore ] && echo "   - .gitignore"
+    echo ""
+    read -p "삭제할까요? [y/N] " answer
+    if [ "$answer" = "y" ] || [ "$answer" = "Y" ]; then
+        rm -rf .git/
+        rm -f .gitignore
+        GIT_CLEANED="yes"
+    fi
+fi
 
 echo ""
 echo "✅ Cleaned:"
 echo "   - CHANGELOG.md, README.md, VERSION"
 echo "   - .planning/"
 echo "   - docs/howto/"
-echo "   - Git tags (local)"
+[ "$GIT_CLEANED" = "yes" ] && echo "   - .git/, .gitignore"
 echo ""
 echo "📝 Next steps:"
 echo "   1. Create your README.md"
