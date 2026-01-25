@@ -47,63 +47,27 @@ const DEFAULTS = {
   }
 };
 
-// Fallback model profiles (used if external file not found)
-const FALLBACK_PROFILES = {
-  quality: {
-    'gsd-planner': 'opus',
-    'gsd-roadmapper': 'opus',
-    'gsd-executor': 'opus',
-    'gsd-phase-researcher': 'opus',
-    'gsd-project-researcher': 'opus',
-    'gsd-research-synthesizer': 'sonnet',
-    'gsd-debugger': 'opus',
-    'gsd-codebase-mapper': 'sonnet',
-    'gsd-verifier': 'sonnet',
-    'gsd-plan-checker': 'sonnet',
-    'gsd-integration-checker': 'sonnet'
-  },
-  balanced: {
-    'gsd-planner': 'opus',
-    'gsd-roadmapper': 'sonnet',
-    'gsd-executor': 'sonnet',
-    'gsd-phase-researcher': 'sonnet',
-    'gsd-project-researcher': 'sonnet',
-    'gsd-research-synthesizer': 'sonnet',
-    'gsd-debugger': 'sonnet',
-    'gsd-codebase-mapper': 'haiku',
-    'gsd-verifier': 'sonnet',
-    'gsd-plan-checker': 'sonnet',
-    'gsd-integration-checker': 'sonnet'
-  },
-  budget: {
-    'gsd-planner': 'sonnet',
-    'gsd-roadmapper': 'sonnet',
-    'gsd-executor': 'sonnet',
-    'gsd-phase-researcher': 'haiku',
-    'gsd-project-researcher': 'haiku',
-    'gsd-research-synthesizer': 'haiku',
-    'gsd-debugger': 'sonnet',
-    'gsd-codebase-mapper': 'haiku',
-    'gsd-verifier': 'haiku',
-    'gsd-plan-checker': 'haiku',
-    'gsd-integration-checker': 'haiku'
-  }
-};
+// Minimal fallback (used only if model-profiles.json not found)
+// Single source of truth is: .claude/get-shit-done/config/model-profiles.json
+const FALLBACK_DEFAULT_MODEL = 'sonnet';
 
 /**
  * Load model profiles from external JSON file
+ * Single source of truth: model-profiles.json
  */
 function loadModelProfiles() {
   try {
     if (fs.existsSync(MODEL_PROFILES_PATH)) {
       const content = fs.readFileSync(MODEL_PROFILES_PATH, 'utf8');
       const data = JSON.parse(content);
-      return data.profiles || FALLBACK_PROFILES;
+      return data.profiles || null;
     }
   } catch (err) {
     console.error(`[gsd-config] Error loading model profiles: ${err.message}`);
   }
-  return FALLBACK_PROFILES;
+  // Return null to indicate profiles not loaded (will use fallback default)
+  console.error(`[gsd-config] Warning: model-profiles.json not found, using default: ${FALLBACK_DEFAULT_MODEL}`);
+  return null;
 }
 
 // Lazy-load profiles
@@ -156,13 +120,24 @@ function getValue(obj, keyPath) {
 
 /**
  * Get model for agent based on profile
+ * Uses model-profiles.json as single source of truth
  */
 function getModelForAgent(agentName, profile = null) {
   const config = loadConfig();
   const effectiveProfile = profile || config.model_profile || 'balanced';
   const profiles = getModelProfiles();
+
+  // If profiles not loaded, return fallback default
+  if (!profiles) {
+    return FALLBACK_DEFAULT_MODEL;
+  }
+
   const profileModels = profiles[effectiveProfile] || profiles.balanced;
-  return profileModels[agentName] || 'sonnet';
+  if (!profileModels) {
+    return FALLBACK_DEFAULT_MODEL;
+  }
+
+  return profileModels[agentName] || FALLBACK_DEFAULT_MODEL;
 }
 
 /**
