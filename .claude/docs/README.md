@@ -45,7 +45,9 @@ GSD는 "Get Shit Done"의 약자로, 솔로 개발자가 Claude Code와 함께 �
 ├── agents/          # AI 에이전트 (11개)
 ├── commands/        # 슬래시 명령어
 │   ├── gsd/         # GSD 명령어 (27개)
-│   └── howto.md     # 개발 지식 기록
+│   ├── commit.md    # Git 초기화 및 스마트 커밋
+│   ├── howto.md     # 개발 지식 기록
+│   └── release.md   # 릴리스 관리
 ├── skills/          # 방법론 및 패턴
 │   └── gsd/         # GSD 스킬 (11개)
 ├── hooks/           # Node.js 훅 스크립트
