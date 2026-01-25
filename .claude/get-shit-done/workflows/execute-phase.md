@@ -14,21 +14,16 @@ Read config.json for planning behavior settings.
 <process>
 
 <step name="resolve_model_profile" priority="first">
-Read model profile for agent spawning:
+Read model profile and resolve agent models using the config helper:
 
 ```bash
-MODEL_PROFILE=$(cat .planning/config.json 2>/dev/null | grep -o '"model_profile"[[:space:]]*:[[:space:]]*"[^"]*"' | grep -o '"[^"]*"$' | tr -d '"' || echo "balanced")
+# Get models for this workflow's agents
+EXECUTOR_MODEL=$(node .claude/hooks/gsd-config.js --model gsd-executor)
+VERIFIER_MODEL=$(node .claude/hooks/gsd-config.js --model gsd-verifier)
 ```
 
-Default to "balanced" if not set.
-
-**Model lookup table:**
-
-| Agent | quality | balanced | budget |
-|-------|---------|----------|--------|
-| gsd-executor | opus | sonnet | sonnet |
-| gsd-verifier | sonnet | sonnet | haiku |
-| general-purpose | — | — | — |
+The helper reads `.planning/config.json`, applies the model profile from `.claude/get-shit-done/config/model-profiles.json`, and returns the correct model.
+Defaults to "balanced" profile if not set.
 
 Store resolved models for use in Task calls below.
 </step>
@@ -59,7 +54,7 @@ Options:
 
 ```bash
 # Check if planning docs should be committed (default: true)
-COMMIT_PLANNING_DOCS=$(cat .planning/config.json 2>/dev/null | grep -o '"commit_docs"[[:space:]]*:[[:space:]]*[^,}]*' | grep -o 'true\|false' || echo "true")
+COMMIT_PLANNING_DOCS=$(node .claude/hooks/gsd-config.js commit_docs true)
 # Auto-detect gitignored (overrides config)
 git check-ignore -q .planning 2>/dev/null && COMMIT_PLANNING_DOCS=false
 ```
