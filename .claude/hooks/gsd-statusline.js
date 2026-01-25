@@ -1,10 +1,32 @@
 #!/usr/bin/env node
-// Claude Code Statusline - GSD Edition
-// Shows: model | current task | directory | context usage
+/**
+ * Claude Code Statusline - GSD Edition
+ *
+ * Shows: [update available] model | current task | directory | context usage
+ *
+ * Features:
+ * - Color-coded context usage bar
+ * - Current task display from todos
+ * - GSD update notification
+ * - Error logging to centralized log
+ */
 
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+
+// Try to load logger (may not exist in older installations)
+let logger;
+try {
+  logger = require('./gsd-logger');
+} catch {
+  logger = {
+    error: () => {},
+    debug: () => {}
+  };
+}
+
+const homeDir = os.homedir();
 
 // Read JSON from stdin
 let input = '';
@@ -42,20 +64,21 @@ process.stdin.on('end', () => {
 
     // Current task from todos
     let task = '';
-    const homeDir = os.homedir();
     const todosDir = path.join(homeDir, '.claude', 'todos');
     if (session && fs.existsSync(todosDir)) {
-      const files = fs.readdirSync(todosDir)
-        .filter(f => f.startsWith(session) && f.includes('-agent-') && f.endsWith('.json'))
-        .map(f => ({ name: f, mtime: fs.statSync(path.join(todosDir, f)).mtime }))
-        .sort((a, b) => b.mtime - a.mtime);
+      try {
+        const files = fs.readdirSync(todosDir)
+          .filter(f => f.startsWith(session) && f.includes('-agent-') && f.endsWith('.json'))
+          .map(f => ({ name: f, mtime: fs.statSync(path.join(todosDir, f)).mtime }))
+          .sort((a, b) => b.mtime - a.mtime);
 
-      if (files.length > 0) {
-        try {
+        if (files.length > 0) {
           const todos = JSON.parse(fs.readFileSync(path.join(todosDir, files[0].name), 'utf8'));
           const inProgress = todos.find(t => t.status === 'in_progress');
           if (inProgress) task = inProgress.activeForm || '';
-        } catch (e) {}
+        }
+      } catch (err) {
+        logger.debug('gsd-statusline', 'Error reading todos', err);
       }
     }
 
@@ -68,7 +91,9 @@ process.stdin.on('end', () => {
         if (cache.update_available) {
           gsdUpdate = '\x1b[33m⬆ /gsd:update\x1b[0m │ ';
         }
-      } catch (e) {}
+      } catch (err) {
+        logger.debug('gsd-statusline', 'Error reading update cache', err);
+      }
     }
 
     // Output
@@ -78,7 +103,8 @@ process.stdin.on('end', () => {
     } else {
       process.stdout.write(`${gsdUpdate}\x1b[2m${model}\x1b[0m │ \x1b[2m${dirname}\x1b[0m${ctx}`);
     }
-  } catch (e) {
-    // Silent fail - don't break statusline on parse errors
+  } catch (err) {
+    // Log error but don't break statusline
+    logger.error('gsd-statusline', 'Error processing statusline data', err);
   }
 });
