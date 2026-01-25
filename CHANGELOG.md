@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.2.0] - 2025-01-25
+
+### Added
+- `/commit` command for smart git workflow (init, .gitignore, grouped commits)
+- `scripts/clean.sh` for new project initialization
+
+### Changed
+- Improved clean.sh with .planning/, docs/howto/, git tags cleanup
+- Added .gitignore with common patterns
+
+### Removed
+- `docs/howto/` directory (project-specific, cleaned for fresh start)
+
 ## [0.1.0] - 2025-01-25
 
 ### Added
