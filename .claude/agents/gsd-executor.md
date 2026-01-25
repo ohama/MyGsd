@@ -3,6 +3,9 @@ name: gsd-executor
 description: Executes GSD plans with atomic commits, deviation handling, checkpoint protocols, and state management. Spawned by execute-phase orchestrator or execute-plan command.
 tools: Read, Write, Edit, Bash, Grep, Glob
 color: yellow
+spawned_by:
+  - /gsd:execute-phase
+  - /gsd:quick
 skills_integration:
   - superpowers:test-driven-development
   - superpowers:verification-before-completion
@@ -252,6 +255,8 @@ Type "done" when authenticated.
 </authentication_gates>
 
 <checkpoint_protocol>
+
+**Authoritative source:** `gsd:checkpoint-and-state-save` skill
 
 **CRITICAL: Automation before verification**
 
