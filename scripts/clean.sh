@@ -9,16 +9,51 @@ set -e
 
 echo "🧹 Cleaning up for new project..."
 
-# 프로젝트 메타 파일
-rm -f CHANGELOG.md
-rm -f README.md
-rm -f VERSION
+# GSD 계획 파일 (사용자 확인 후 제거)
+PLANNING_CLEANED=""
+if [ -d .planning ]; then
+    echo ""
+    echo "⚠️  GSD 계획 파일이 있습니다:"
+    echo "   - .planning/"
+    echo ""
+    read -p "삭제할까요? [y/N] " answer
+    if [ "$answer" = "y" ] || [ "$answer" = "Y" ]; then
+        rm -rf .planning/
+        PLANNING_CLEANED="yes"
+    fi
+fi
 
-# GSD 계획 파일
-rm -rf .planning/
+# 프로젝트별 문서 (사용자 확인 후 제거)
+HOWTO_CLEANED=""
+if [ -d docs/howto ]; then
+    echo ""
+    echo "⚠️  Howto 문서가 있습니다:"
+    echo "   - docs/howto/"
+    echo ""
+    read -p "삭제할까요? [y/N] " answer
+    if [ "$answer" = "y" ] || [ "$answer" = "Y" ]; then
+        rm -rf docs/howto/
+        HOWTO_CLEANED="yes"
+    fi
+fi
 
-# 프로젝트별 문서
-rm -rf docs/howto/
+# 프로젝트 메타 파일 (사용자 확인 후 제거)
+META_CLEANED=""
+if [ -f CHANGELOG.md ] || [ -f README.md ] || [ -f VERSION ]; then
+    echo ""
+    echo "⚠️  프로젝트 메타 파일이 있습니다:"
+    [ -f CHANGELOG.md ] && echo "   - CHANGELOG.md"
+    [ -f README.md ] && echo "   - README.md"
+    [ -f VERSION ] && echo "   - VERSION"
+    echo ""
+    read -p "삭제할까요? [y/N] " answer
+    if [ "$answer" = "y" ] || [ "$answer" = "Y" ]; then
+        rm -f CHANGELOG.md
+        rm -f README.md
+        rm -f VERSION
+        META_CLEANED="yes"
+    fi
+fi
 
 # Git 관련 파일 (사용자 확인 후 제거)
 GIT_CLEANED=""
@@ -38,9 +73,9 @@ fi
 
 echo ""
 echo "✅ Cleaned:"
-echo "   - CHANGELOG.md, README.md, VERSION"
-echo "   - .planning/"
-echo "   - docs/howto/"
+[ "$PLANNING_CLEANED" = "yes" ] && echo "   - .planning/"
+[ "$HOWTO_CLEANED" = "yes" ] && echo "   - docs/howto/"
+[ "$META_CLEANED" = "yes" ] && echo "   - CHANGELOG.md, README.md, VERSION"
 [ "$GIT_CLEANED" = "yes" ] && echo "   - .git/, .gitignore"
 echo ""
 echo "📝 Next steps:"
