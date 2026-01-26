@@ -518,6 +518,16 @@ git commit -m "docs(phase-{X}): complete phase execution"
 ```
 </step>
 
+<step name="record_learnings">
+Record learnings from phase execution:
+
+```
+/howto record
+```
+
+This captures patterns, solutions, and reusable knowledge discovered during phase execution.
+</step>
+
 <step name="offer_next">
 Present next steps based on milestone status:
 
