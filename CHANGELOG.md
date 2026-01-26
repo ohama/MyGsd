@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.5.0] - 2025-01-26
+
+### Added
+- `scripts/pack.sh` for packaging `.claude/` to `dist/*.tgz`
+
+### Changed
+- `clean.sh` now prompts before deleting all items (`.planning/`, `docs/howto/`, meta files)
+
 ## [0.4.0] - 2025-01-26
 
 ### Added
