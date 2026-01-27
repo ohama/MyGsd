@@ -19,7 +19,7 @@ description: 개발 지식을 howto 문서로 기록하고 관리
 | 명령 | 설명 |
 |------|------|
 | `/howto` | 문서 목록 + TODO |
-| `/howto record` | 세션 분석 → TODO에 추가 |
+| `/howto scan` | 세션 분석 → TODO에 추가 |
 | `/howto next [번호]` | TODO에서 문서 생성 (기본값: 1) |
 | `/howto all` | TODO 전체 문서 생성 |
 | `/howto rm <번호>` | TODO에서 항목 삭제 |
@@ -28,7 +28,7 @@ description: 개발 지식을 howto 문서로 기록하고 관리
 
 **일반적인 워크플로우:**
 ```
-/howto record  →  세션에서 주제 발견, TODO에 추가
+/howto scan    →  세션에서 주제 발견, TODO에 추가
 /howto         →  문서 목록 + TODO 확인
 /howto next    →  첫 번째 TODO 문서화
 /howto all     →  TODO 전체 문서화
@@ -42,7 +42,7 @@ description: 개발 지식을 howto 문서로 기록하고 관리
 
 ```
 /howto              → list (문서 목록 + TODO)
-/howto record       → record (세션 분석 → TODO 추가)
+/howto scan         → scan (세션 분석 → TODO 추가)
 /howto next [숫자]  → next (TODO에서 생성, 기본값: 1)
 /howto all          → all (TODO 전체 생성)
 /howto rm <숫자>    → remove (TODO에서 삭제)
@@ -70,12 +70,12 @@ README.md와 TODO.md를 함께 출력.
 | 2 | Result 에러 핸들링 | `handle-errors-with-result.md` |
 
 ---
-`/howto record` — 세션에서 주제 발견
+`/howto scan` — 세션에서 주제 발견
 `/howto next` — TODO #1 문서 작성
 `/howto all` — TODO 전체 문서 작성
 ```
 
-## Action: record
+## Action: scan
 
 세션을 분석하여 문서화할 주제를 발견하고 TODO에 추가.
 
@@ -314,7 +314,7 @@ docs/howto/
 
 ### 세션 분석
 ```
-/howto record
+/howto scan
 → 세션에서 주제 발견, TODO에 추가
 ```
 

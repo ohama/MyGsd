@@ -58,7 +58,7 @@ npx get-shit-done-cc@latest
 | 명령어 | 설명 |
 |--------|------|
 | `/howto` | 개발 지식 기록 및 관리 |
-| `/howto record` | 현재 세션 작업을 문서화 |
+| `/howto scan` | 현재 세션 작업을 문서화 |
 | `/howto new <제목>` | 새 howto 문서 생성 |
 | `/release <patch\|minor\|major>` | 버전 업그레이드, CHANGELOG, 릴리스 커밋 |
 | `/commit` | Git 초기화, .gitignore 관리, 스마트 커밋 |
@@ -108,7 +108,7 @@ npx get-shit-done-cc@latest
 
 ```bash
 # 세션 작업 기록
-/howto record
+/howto scan
 
 # 문서 목록
 /howto
