@@ -11,7 +11,7 @@
 | `/howto` | 문서 목록 표시 |
 | `/howto 키워드` | 문서 검색 |
 | `/howto new 제목` | 새 문서 생성 |
-| `/howto record` | 세션 작업 기록 |
+| `/howto scan` | 세션 작업 기록 |
 
 **문서 위치:** `docs/howto/`
 

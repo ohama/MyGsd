@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.5.1] - 2025-01-27
+
+### Changed
+- Rename `/howto record` to `/howto scan` for better semantics
+
 ## [0.5.0] - 2025-01-26
 
 ### Added
@@ -16,7 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ## [0.4.0] - 2025-01-26
 
 ### Added
-- Auto `/howto record` execution after GSD phase completion
+- Auto `/howto scan` execution after GSD phase completion
 
 ## [0.3.0] - 2025-01-25
 

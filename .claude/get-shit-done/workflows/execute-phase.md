@@ -522,7 +522,7 @@ git commit -m "docs(phase-{X}): complete phase execution"
 Record learnings from phase execution:
 
 ```
-/howto record
+/howto scan
 ```
 
 This captures patterns, solutions, and reusable knowledge discovered during phase execution.
