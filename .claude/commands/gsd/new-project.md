@@ -49,13 +49,22 @@ This is the most leveraged moment in any project. Deep questioning here means be
 
 2. **Check existing git files:**
    ```bash
-   HAS_GIT=$([ -d .git ] && echo "yes")
+   HAS_LOCAL_GIT=$([ -d .git ] && echo "yes")
    HAS_GITIGNORE=$([ -f .gitignore ] && echo "yes")
+
+   # Check for parent .git (current dir is inside another repo)
+   PARENT_GIT_ROOT=$(git rev-parse --show-toplevel 2>/dev/null)
+   if [ -n "$PARENT_GIT_ROOT" ] && [ "$PARENT_GIT_ROOT" != "$(pwd)" ]; then
+       HAS_PARENT_GIT="yes"
+       echo "Parent git repo detected at: $PARENT_GIT_ROOT"
+   else
+       HAS_PARENT_GIT=""
+   fi
    ```
 
-   **If .git or .gitignore exists**, use AskUserQuestion:
+   **If local .git exists**, use AskUserQuestion:
    - header: "Git Files"
-   - question: "Existing git files detected. How would you like to proceed?"
+   - question: "Existing .git detected in current directory. How would you like to proceed?"
    - options:
      - "Keep" — Preserve .git and .gitignore (continue existing history)
      - "Remove" — Delete and start fresh (new git history)
@@ -69,10 +78,23 @@ This is the most leveraged moment in any project. Deep questioning here means be
 
    **If "Keep":** Continue with existing files.
 
-3. **Initialize git repo** (if not exists):
+   **If parent .git exists (and no local .git)**, use AskUserQuestion:
+   - header: "Parent Repo"
+   - question: "This directory is inside a git repo at [PARENT_GIT_ROOT]. How would you like to proceed?"
+   - options:
+     - "Use parent repo" — Work within existing repo (commits go to parent)
+     - "Create separate repo" — Initialize new .git in current directory (nested repo)
+
+   **If "Use parent repo":** Skip git init, use parent repo for commits.
+
+   **If "Create separate repo":** Run `git init` to create local .git.
+
+3. **Initialize git repo** (if needed):
    ```bash
    if [ -d .git ] || [ -f .git ]; then
        echo "Git repo exists in current directory"
+   elif [ -n "$HAS_PARENT_GIT" ] && [ "$USE_PARENT_REPO" = "yes" ]; then
+       echo "Using parent git repo at: $PARENT_GIT_ROOT"
    else
        git init
        echo "Initialized new git repo"
