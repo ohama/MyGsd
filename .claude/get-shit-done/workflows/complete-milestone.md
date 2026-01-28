@@ -584,8 +584,8 @@ Progress: [updated progress bar]
 Create git tag for milestone:
 
 ```bash
-git tag -a v[X.Y] -m "$(cat <<'EOF'
-v[X.Y] [Name]
+git tag -a milestone[X.Y] -m "$(cat <<'EOF'
+milestone[X.Y] [Name]
 
 Delivered: [One sentence]
 
@@ -599,14 +599,14 @@ EOF
 )"
 ```
 
-Confirm: "Tagged: v[X.Y]"
+Confirm: "Tagged: milestone[X.Y]"
 
 Ask: "Push tag to remote? (y/n)"
 
 If yes:
 
 ```bash
-git push origin v[X.Y]
+git push origin milestone[X.Y]
 ```
 
 </step>
@@ -658,7 +658,7 @@ Updated:
 - PROJECT.md (requirements → Validated)
 - STATE.md (reset for next milestone)
 
-Tagged: v[X.Y]
+Tagged: milestone[X.Y]
 EOF
 )"
 ```
@@ -681,7 +681,7 @@ Archived:
 - milestones/v[X.Y]-REQUIREMENTS.md
 
 Summary: .planning/MILESTONES.md
-Tag: v[X.Y]
+Tag: milestone[X.Y]
 
 ---
 
@@ -749,7 +749,7 @@ Milestone completion is successful when:
 - [ ] Requirements archive created (milestones/v[X.Y]-REQUIREMENTS.md)
 - [ ] REQUIREMENTS.md deleted (fresh for next milestone)
 - [ ] STATE.md updated with fresh project reference
-- [ ] Git tag created (v[X.Y])
+- [ ] Git tag created (milestone[X.Y])
 - [ ] Milestone commit made (includes archive files and deletion)
 - [ ] User knows next step (/gsd:new-milestone)
 
