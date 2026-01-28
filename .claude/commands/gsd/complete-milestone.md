@@ -104,7 +104,7 @@ Output: Milestone archived (roadmap + requirements), PROJECT.md evolved, git tag
 
    - Stage: MILESTONES.md, PROJECT.md, ROADMAP.md, STATE.md, archive files
    - Commit: `chore: archive v{{version}} milestone`
-   - Tag: `git tag -a v{{version}} -m "[milestone summary]"`
+   - Tag: `git tag -a milestone{{version}} -m "[milestone summary]"`
    - Ask about pushing tag
 
 8. **Offer next steps:**
@@ -119,7 +119,7 @@ Output: Milestone archived (roadmap + requirements), PROJECT.md evolved, git tag
 - `.planning/REQUIREMENTS.md` deleted (fresh for next milestone)
 - ROADMAP.md collapsed to one-line entry
 - PROJECT.md updated with current state
-- Git tag v{{version}} created
+- Git tag milestone{{version}} created
 - Commit successful
 - User knows next steps (including need for fresh requirements)
   </success_criteria>
