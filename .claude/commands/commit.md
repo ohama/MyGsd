@@ -26,8 +26,10 @@ description: Git 초기화, .gitignore 관리, 스마트 커밋
 git rev-parse --is-inside-work-tree 2>/dev/null
 ```
 
-- 실패 시: `git init` 실행
-- 성공 시: 다음 단계로
+- 성공 시: 이미 Git 저장소 안에 있음 (현재 또는 상위 디렉토리에 .git 존재) → 다음 단계로
+- 실패 시: Git 저장소가 아님 → `git init` 실행
+
+> **참고**: 상위 디렉토리에 `.git`이 있으면 현재 디렉토리도 해당 저장소의 일부이므로 `git init`을 실행하지 않습니다.
 
 ## Step 2: .gitignore 확인
 
