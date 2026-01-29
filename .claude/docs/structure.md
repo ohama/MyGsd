@@ -98,12 +98,13 @@ Claude Code 통합 설정:
 - `howto.md` - 개발 지식 기록 및 관리
 - `release.md` - 버전 업그레이드, CHANGELOG 작성, 릴리스 커밋
 
-### 4. `skills/gsd/` (11개 스킬)
+### 4. `skills/gsd/` (12개 스킬)
 
 에이전트가 참조하는 방법론 및 패턴:
 
 | 스킬 | 용도 |
 |------|------|
+| `research-methodology` | 리서치 철학/전략/검증 (researcher 에이전트 공통) |
 | `resolve-model-profile` | 모델 프로파일 결정 |
 | `verify-goal-backward` | 목표 역추적 검증 |
 | `checkpoint-and-state-save` | 체크포인트 프로토콜 |
