@@ -69,7 +69,7 @@ Claude Code 통합 설정:
 
 ### 3. `commands/`
 
-#### GSD 명령어 (`commands/gsd/`, 27개)
+#### GSD 명령어 (`commands/gsd/`, 28개)
 
 **프로젝트 초기화**
 - `new-project.md` - 새 프로젝트 시작
@@ -91,6 +91,7 @@ Claude Code 통합 설정:
 
 **설정 및 유틸리티**
 - `settings.md`, `set-profile.md`, `help.md`, `update.md`, `join-discord.md`
+- `health.md` - GSD 프로젝트 상태 진단
 
 #### 범용 명령어 (`commands/`)
 
