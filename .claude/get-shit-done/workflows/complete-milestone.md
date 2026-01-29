@@ -627,11 +627,25 @@ Progress: [updated progress bar]
 
 <step name="git_tag">
 
-Create git tag for milestone:
+**Ask user before creating tag:**
+
+```markdown
+Git 태그를 생성할까요?
+
+태그: milestone-v[X.Y]
+메시지:
+  milestone-v[X.Y] [Name]
+  Delivered: [One sentence]
+  Key accomplishments: [3-4 items]
+
+[Y] 생성  [N] 건너뛰기  [E] 메시지 수정
+```
+
+**If user confirms (Y or E after edit):**
 
 ```bash
-git tag -a milestone[X.Y] -m "$(cat <<'EOF'
-milestone[X.Y] [Name]
+git tag -a milestone-v[X.Y] -m "$(cat <<'EOF'
+milestone-v[X.Y] [Name]
 
 Delivered: [One sentence]
 
@@ -645,14 +659,22 @@ EOF
 )"
 ```
 
-Confirm: "Tagged: milestone[X.Y]"
+Confirm: "Tagged: milestone-v[X.Y]"
 
-Ask: "Push tag to remote? (y/n)"
+**If user skipped (N):** Continue without tag, note in summary.
+
+**After tag created, ask about push:**
+
+```markdown
+태그를 원격에 푸시할까요?
+
+[Y] 푸시  [N] 나중에
+```
 
 If yes:
 
 ```bash
-git push origin milestone[X.Y]
+git push origin milestone-v[X.Y]
 ```
 
 </step>
@@ -707,7 +729,7 @@ Updated:
 - PROJECT.md (requirements → Validated)
 - STATE.md (reset for next milestone)
 
-Tagged: milestone[X.Y]
+Tagged: milestone-v[X.Y]
 EOF
 )"
 ```
@@ -731,7 +753,7 @@ Archived:
 - milestones/v[X.Y]-phases/
 
 Summary: .planning/MILESTONES.md
-Tag: milestone[X.Y]
+Tag: milestone-v[X.Y]
 
 ---
 
@@ -802,7 +824,7 @@ Milestone completion is successful when:
 - [ ] REQUIREMENTS.md deleted (fresh for next milestone)
 - [ ] .planning/phases/ deleted (archived, fresh for next milestone)
 - [ ] STATE.md updated with fresh project reference
-- [ ] Git tag created (milestone[X.Y])
+- [ ] Git tag created (milestone-v[X.Y])
 - [ ] Milestone commit made (includes archive files and deletion)
 - [ ] User knows next step (/gsd:new-milestone)
 

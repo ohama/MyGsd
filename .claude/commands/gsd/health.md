@@ -248,13 +248,13 @@ fi
 
 # Check git tags vs MILESTONES.md
 grep -oE 'v[0-9]+\.[0-9]+' .planning/MILESTONES.md 2>/dev/null | sort -u | while read -r version; do
-  tag="milestone${version#v}"
+  tag="milestone-${version}"
   git tag -l "$tag" 2>/dev/null | grep -q "$tag" || echo "INFO: Milestone $version has no git tag ($tag)"
 done
 
 # Check for untagged milestones
-git tag -l 'milestone*' 2>/dev/null | while read -r tag; do
-  version="v${tag#milestone}"
+git tag -l 'milestone-v*' 2>/dev/null | while read -r tag; do
+  version="${tag#milestone-}"
   grep -qE "^## ${version}" .planning/MILESTONES.md 2>/dev/null || echo "WARN: Git tag $tag has no MILESTONES.md entry"
 done
 ```
@@ -803,24 +803,47 @@ If STATE.md references a phase not in ROADMAP.md:
 
 ### Fix: Git Tag Sync
 
-Create missing milestone tags:
+Create missing milestone tags (with user confirmation):
+
+**Step 1: Identify missing tags and ask user:**
+
+```markdown
+다음 마일스톤에 git 태그가 없습니다:
+
+| Milestone | 태그 |
+|-----------|------|
+| v1.0 MVP | milestone-v1.0 |
+| v1.1 Security | milestone-v1.1 |
+
+태그를 생성할까요? [Y] 모두 생성  [S] 선택  [N] 건너뛰기
+```
+
+**Step 2: Create tags after user confirmation:**
 
 ```bash
-# For each milestone without a tag
+# For each confirmed milestone
 VERSION="1.0"
 MILESTONE_NAME="MVP"
 
-git tag -a "milestone${VERSION}" -m "$(cat <<EOF
+git tag -a "milestone-v${VERSION}" -m "$(cat <<EOF
 Milestone v${VERSION}: ${MILESTONE_NAME}
 
 See .planning/MILESTONES.md for details.
 EOF
 )"
 
-echo "✅ Created tag milestone${VERSION}"
+echo "✅ Created tag milestone-v${VERSION}"
+```
 
-# Optionally push
-git push origin "milestone${VERSION}"
+**Step 3: Ask about push:**
+
+```markdown
+생성된 태그를 원격에 푸시할까요? [Y/N]
+```
+
+```bash
+# If yes
+git push origin "milestone-v${VERSION}"
 ```
 
 ### Fix: Context Size - Trim Bloated Files

@@ -33,13 +33,27 @@ description: 버전 업그레이드, CHANGELOG 작성, 릴리스 커밋 생성
 
 ## Step 2: Find Current Version
 
-버전 소스: `VERSION` 파일
+버전 소스: `VERSION` 파일 (필수)
 
 ```bash
 cat VERSION 2>/dev/null
 ```
 
-VERSION 파일이 없으면 `0.0.0`에서 시작 (첫 릴리스는 `0.1.0`).
+**VERSION 파일이 없으면:**
+
+AskUserQuestion으로 질문:
+
+```
+VERSION 파일이 없습니다. 현재 버전을 입력해주세요.
+
+예시:
+- 첫 릴리스: 0.1.0 또는 1.0.0
+- 기존 프로젝트: 현재 버전 번호
+
+[입력] 버전 번호 (예: 1.0.0)
+```
+
+사용자가 입력한 버전으로 VERSION 파일을 생성하고 진행.
 
 ## Step 3: Calculate New Version
 
@@ -135,9 +149,24 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 
 ## Step 8: Create Git Tag
 
+**Ask user before creating tag:**
+
+```markdown
+Git 태그를 생성할까요?
+
+태그: vX.Y.Z
+메시지: Release vX.Y.Z
+
+[Y] 생성  [N] 건너뛰기
+```
+
+**If user confirms:**
+
 ```bash
 git tag -a vX.Y.Z -m "Release vX.Y.Z"
 ```
+
+**If user skipped:** Continue without tag, note in summary.
 
 ## Step 9: Show Summary
 
@@ -251,17 +280,22 @@ Claude: ## Release v2.0.0 준비 완료
 
 ## 예외 처리
 
-### VERSION 파일 없음 (첫 릴리스)
+### VERSION 파일 없음
 
 ```markdown
-VERSION 파일이 없습니다. 첫 릴리스로 진행합니다.
+VERSION 파일이 없습니다. 현재 버전을 입력해주세요.
 
-새 버전: 0.1.0
+예시:
+- 첫 릴리스: 0.1.0 또는 1.0.0
+- 기존 프로젝트: 현재 버전 번호
 
-계속할까요?
+[입력] 버전 번호 (예: 1.0.0)
 ```
 
-첫 릴리스는 항상 `0.1.0`으로 시작합니다.
+사용자 입력 후:
+1. VERSION 파일 생성 (입력된 버전으로)
+2. bump 적용하여 새 버전 계산
+3. 릴리스 진행
 
 ### 커밋 없음
 
