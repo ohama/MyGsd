@@ -24,12 +24,14 @@ When a milestone completes, this workflow:
 
 1. Extracts full milestone details to `.planning/milestones/v[X.Y]-ROADMAP.md`
 2. Archives requirements to `.planning/milestones/v[X.Y]-REQUIREMENTS.md`
-3. Updates ROADMAP.md to replace milestone details with one-line summary
-4. Deletes REQUIREMENTS.md (fresh one created for next milestone)
-5. Performs full PROJECT.md evolution review
-6. Offers to create next milestone inline
+3. Archives phase directories to `.planning/milestones/v[X.Y]-phases/`
+4. Deletes ROADMAP.md (fresh one created for next milestone)
+5. Deletes REQUIREMENTS.md (fresh one created for next milestone)
+6. Deletes `.planning/phases/` (archived, fresh for next milestone)
+7. Performs full PROJECT.md evolution review
+8. Offers to create next milestone inline
 
-**Context Efficiency:** Archives keep ROADMAP.md constant-size and REQUIREMENTS.md milestone-scoped.
+**Context Efficiency:** Archives keep ROADMAP.md, REQUIREMENTS.md, and phases/ constant-size per milestone.
 
 **Archive Format:**
 
@@ -460,8 +462,6 @@ Extract completed milestone details and create archive file.
    ✅ ROADMAP.md deleted (fresh one for next milestone)
    ```
 
-**Note:** Phase directories (`.planning/phases/`) are NOT deleted. They accumulate across milestones as the raw execution history. Phase numbering continues (v1.0 phases 1-4, v1.1 phases 5-8, etc.).
-
 </step>
 
 <step name="archive_requirements">
@@ -542,6 +542,52 @@ Confirm:
 ```
 
 (Skip silently if no audit file exists — audit is optional)
+
+</step>
+
+<step name="archive_phases">
+
+Archive phase directories for this milestone.
+
+**Process:**
+
+1. Identify phases belonging to this milestone:
+   ```bash
+   # List all phase directories in milestone range
+   ls -d .planning/phases/[PHASE_START]-* .planning/phases/[PHASE_END]-* 2>/dev/null
+   ```
+
+2. Create archive directory:
+   ```bash
+   mkdir -p .planning/milestones/v[X.Y]-phases
+   ```
+
+3. Move all milestone phase directories to archive:
+   ```bash
+   # Move phase directories (e.g., phases 1-4 for v1.0)
+   mv .planning/phases/01-* .planning/milestones/v[X.Y]-phases/ 2>/dev/null || true
+   mv .planning/phases/02-* .planning/milestones/v[X.Y]-phases/ 2>/dev/null || true
+   # ... for each phase in milestone range
+   ```
+
+4. Verify archive:
+   ```bash
+   ls .planning/milestones/v[X.Y]-phases/
+   ```
+
+5. Clean up phases directory if empty:
+   ```bash
+   # Remove phases directory if all phases were archived
+   rmdir .planning/phases 2>/dev/null || true
+   ```
+
+6. Confirm:
+   ```
+   ✅ Phases [X-Y] archived to milestones/v[X.Y]-phases/
+   ✅ .planning/phases/ cleared (fresh for next milestone)
+   ```
+
+**Note:** Phase numbering continues across milestones (v1.0 phases 1-4, v1.1 phases 5-8). Each milestone's phases are preserved in their archive directory for historical reference.
 
 </step>
 
@@ -631,6 +677,7 @@ git check-ignore -q .planning 2>/dev/null && COMMIT_PLANNING_DOCS=false
 git add .planning/milestones/v[X.Y]-ROADMAP.md
 git add .planning/milestones/v[X.Y]-REQUIREMENTS.md
 git add .planning/milestones/v[X.Y]-MILESTONE-AUDIT.md 2>/dev/null || true
+git add .planning/milestones/v[X.Y]-phases/ 2>/dev/null || true
 
 # Stage updated files
 git add .planning/MILESTONES.md
@@ -648,10 +695,12 @@ Archived:
 - milestones/v[X.Y]-ROADMAP.md
 - milestones/v[X.Y]-REQUIREMENTS.md
 - milestones/v[X.Y]-MILESTONE-AUDIT.md (if audit was run)
+- milestones/v[X.Y]-phases/ (all phase execution history)
 
 Deleted (fresh for next milestone):
 - ROADMAP.md
 - REQUIREMENTS.md
+- phases/ (moved to archive)
 
 Updated:
 - MILESTONES.md (new entry)
@@ -679,6 +728,7 @@ Shipped:
 Archived:
 - milestones/v[X.Y]-ROADMAP.md
 - milestones/v[X.Y]-REQUIREMENTS.md
+- milestones/v[X.Y]-phases/
 
 Summary: .planning/MILESTONES.md
 Tag: milestone[X.Y]
@@ -747,7 +797,10 @@ Milestone completion is successful when:
 - [ ] ROADMAP.md reorganized with milestone grouping
 - [ ] Roadmap archive created (milestones/v[X.Y]-ROADMAP.md)
 - [ ] Requirements archive created (milestones/v[X.Y]-REQUIREMENTS.md)
+- [ ] Phases archive created (milestones/v[X.Y]-phases/)
+- [ ] ROADMAP.md deleted (fresh for next milestone)
 - [ ] REQUIREMENTS.md deleted (fresh for next milestone)
+- [ ] .planning/phases/ deleted (archived, fresh for next milestone)
 - [ ] STATE.md updated with fresh project reference
 - [ ] Git tag created (milestone[X.Y])
 - [ ] Milestone commit made (includes archive files and deletion)
