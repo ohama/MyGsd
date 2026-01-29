@@ -85,18 +85,26 @@ git log --oneline -20
 ls docs/howto/*.md 2>/dev/null
 ```
 
-**Step 2: 주제 식별**
+**Step 2: 주제 식별 (품질 기준)**
 
-문서화 대상:
-- 반복 가능한 작업 패턴
-- 문제 해결 과정
-- 설정/구성 방법
-- 새로 배운 것
+**문서화 대상 (4가지 조건 중 2개 이상 충족):**
 
-제외:
-- 일회성 수정
+| 기준 | 설명 | 예시 |
+|------|------|------|
+| **Non-Googleable** | 검색으로 쉽게 안 나오는 것 | ❌ "TypeScript 파일 읽기" → ✅ "이 프로젝트의 ESM path resolution 특이점" |
+| **Hard-Won** | 디버깅/삽질 끝에 얻은 통찰 | ❌ "try/catch 사용법" → ✅ "worker.ts:89 Promise.all race condition" |
+| **Actionable** | 정확히 무엇을 어디서 하는지 | ❌ "에러 처리하기" → ✅ "tsconfig moduleResolution + package.json type 불일치 해결" |
+| **Reusable** | 반복해서 쓸 수 있는 패턴 | ❌ 일회성 버그 수정 → ✅ 설정/구성 패턴 |
+
+**사전 질문 (하나라도 Yes면 SKIP):**
+- "5분 내 구글링으로 찾을 수 있나?" → Yes면 문서화 불필요
+- "이 프로젝트에서만 의미 있나?" → Yes면 프로젝트 README에 기록
+- "특별한 디버깅 없이 알 수 있었나?" → Yes면 문서화 가치 낮음
+
+**제외:**
+- 일회성 수정, 라이브러리 기본 사용법
 - 이미 문서화된 내용
-- 프로젝트 특화 내용
+- 프로젝트 특화 내용 (→ 프로젝트 docs/로)
 
 **Step 3: TODO에 추가**
 
@@ -195,13 +203,31 @@ grep -l "키워드" docs/howto/*.md
 ```markdown
 # {제목}
 
-{한 줄 설명}
+{한 줄 설명 - 원리 중심}
 
-## 상황
+## The Insight
 
-{언제 이 가이드가 필요한지}
+{무엇을 깨달았나? 코드가 아니라 멘탈 모델}
 
-## 방법
+예: "Async I/O 작업은 독립적으로 실패한다. 클라이언트 생명주기 ≠ 서버 생명주기."
+
+## Why This Matters
+
+{모르면 뭐가 잘못되나? 어떤 증상으로 여기까지 왔나?}
+
+예: "프록시 서버가 클라이언트 연결 끊김에 크래시, 다른 요청도 영향받음."
+
+## Recognition Pattern
+
+{이 지식이 필요한 상황을 어떻게 알아채나?}
+
+예: "장기 연결 핸들러(프록시, 웹소켓, SSE) 구축 시"
+
+## The Approach
+
+{어떻게 생각하고 접근하나? 단순 코드가 아니라 휴리스틱}
+
+예: "각 I/O 작업마다 '지금 실패하면?'을 물어라. 로컬에서 처리하라."
 
 ### Step 1: {단계}
 
@@ -215,15 +241,23 @@ grep -l "키워드" docs/howto/*.md
 
 {설명}
 
-## 예시
+## Example
 
-### Good
+{원리를 설명하는 코드 - 복붙용이 아니라 이해용}
 
-{좋은 예시}
+```typescript
+// ❌ BAD: 전체를 하나의 try로
+try {
+  await connect();
+  await send();
+  await receive();
+} catch (e) { ... }
 
-### Bad
-
-{피해야 할 것}
+// ✅ GOOD: 각 I/O를 독립 처리
+try { await connect(); } catch (e) { handleConnectError(e); }
+try { await send(); } catch (e) { handleSendError(e); }
+try { await receive(); } catch (e) { handleReceiveError(e); }
+```
 
 ## 체크리스트
 
@@ -282,6 +316,20 @@ docs/howto/
 ## 작성 가이드
 
 **대상:** 3년차 개발자 (기본 개념 설명 불필요)
+
+**핵심 원칙: Insight → Approach → Example**
+
+좋은 howto는 코드 복붙이 아니라 **사고방식**을 전달:
+```
+❌ BAD: "ConnectionResetError 나면 이 try/except 추가"
+✅ GOOD: "async I/O는 독립적으로 실패한다. 각 I/O 작업을 개별 처리해야 하는 이유와 방법"
+```
+
+**문서가 답해야 할 질문:**
+1. **The Insight**: 무엇을 깨달았나? (코드가 아니라 원리)
+2. **Why This Matters**: 모르면 뭐가 잘못되나?
+3. **Recognition Pattern**: 이 지식이 필요한 상황을 어떻게 알아채나?
+4. **The Approach**: 어떻게 생각하고 접근하나?
 
 **문체:**
 - 명령형: "~한다", "~을 실행한다"
