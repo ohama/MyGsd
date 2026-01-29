@@ -33,7 +33,7 @@ description: 버전 업그레이드, CHANGELOG 작성, 릴리스 커밋 생성
 
 ## Step 2: Find Current Version
 
-버전 소스: `VERSION` 파일 (필수)
+버전 소스: `VERSION` 파일만 참조 (milestone version은 참조하지 않음)
 
 ```bash
 cat VERSION 2>/dev/null
@@ -41,19 +41,13 @@ cat VERSION 2>/dev/null
 
 **VERSION 파일이 없으면:**
 
-AskUserQuestion으로 질문:
+자동으로 `0.1.0`으로 초기화:
 
-```
-VERSION 파일이 없습니다. 현재 버전을 입력해주세요.
-
-예시:
-- 첫 릴리스: 0.1.0 또는 1.0.0
-- 기존 프로젝트: 현재 버전 번호
-
-[입력] 버전 번호 (예: 1.0.0)
+```bash
+echo "0.1.0" > VERSION
 ```
 
-사용자가 입력한 버전으로 VERSION 파일을 생성하고 진행.
+이 초기 버전에 bump를 적용하여 새 버전을 계산합니다.
 
 ## Step 3: Calculate New Version
 
@@ -282,20 +276,13 @@ Claude: ## Release v2.0.0 준비 완료
 
 ### VERSION 파일 없음
 
-```markdown
-VERSION 파일이 없습니다. 현재 버전을 입력해주세요.
+VERSION 파일이 없으면 자동으로 `0.1.0`으로 초기화:
 
-예시:
-- 첫 릴리스: 0.1.0 또는 1.0.0
-- 기존 프로젝트: 현재 버전 번호
-
-[입력] 버전 번호 (예: 1.0.0)
-```
-
-사용자 입력 후:
-1. VERSION 파일 생성 (입력된 버전으로)
+1. VERSION 파일 생성 (`0.1.0`)
 2. bump 적용하여 새 버전 계산
 3. 릴리스 진행
+
+예: `/release patch` → `0.1.0` → `0.1.1`
 
 ### 커밋 없음
 

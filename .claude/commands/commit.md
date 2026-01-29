@@ -114,9 +114,20 @@ git diff --cached --stat
 | 파일 유형 | `*.md`, `*.ts` |
 | 기능 영역 | auth 관련, UI 관련 |
 
-## Step 5: 커밋 방식 질문
+## Step 5: 커밋 확인
 
-AskUserQuestion으로 질문:
+변경사항 요약 후 커밋 확인:
+
+```
+커밋할까요? [Y/n] (Enter = Y)
+```
+
+**기본값은 Y**. 사용자가 Enter만 치거나 Y를 입력하면 바로 커밋 진행.
+N을 입력한 경우에만 취소.
+
+## Step 6: 커밋 방식 질문 (파일이 많을 때만)
+
+변경 파일이 5개 이상이고 여러 디렉토리에 걸쳐 있을 때만 질문:
 
 ```
 변경사항을 어떻게 커밋할까요?
@@ -130,7 +141,7 @@ AskUserQuestion으로 질문:
 3. docs/ (1 file) - 문서 업데이트
 ```
 
-## Step 6: 커밋 메시지 생성
+## Step 7: 커밋 메시지 생성
 
 ### 한꺼번에 커밋 선택 시
 
@@ -164,7 +175,7 @@ git add docs/
 git commit -m "docs: API 문서 업데이트"
 ```
 
-## Step 7: 커밋 실행
+## Step 8: 커밋 실행
 
 ```bash
 git add <files>
@@ -173,7 +184,7 @@ git commit -m "<message>
 Co-Authored-By: Claude <noreply@anthropic.com>"
 ```
 
-## Step 8: 결과 표시
+## Step 9: 결과 표시
 
 ```markdown
 ## 커밋 완료
