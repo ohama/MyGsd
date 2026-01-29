@@ -18,7 +18,9 @@ description: 개발 지식을 howto 문서로 기록하고 관리
 
 | 명령 | 설명 |
 |------|------|
-| `/howto` | 문서 목록 + TODO |
+| `/howto` | 문서 목록 + TODO (최신순) |
+| `/howto --oldest` | 작성순 정렬 (오래된 것 먼저) |
+| `/howto --alpha` | 알파벳순 정렬 |
 | `/howto scan` | 세션 분석 → TODO에 추가 |
 | `/howto next [번호]` | TODO에서 문서 생성 (기본값: 1) |
 | `/howto all` | TODO 전체 문서 생성 |
@@ -41,7 +43,9 @@ description: 개발 지식을 howto 문서로 기록하고 관리
 ## 입력 파싱
 
 ```
-/howto              → list (문서 목록 + TODO)
+/howto              → list (문서 목록 + TODO, 최신순)
+/howto --oldest     → list (작성순 정렬)
+/howto --alpha      → list (알파벳순 정렬)
 /howto scan         → scan (세션 분석 → TODO 추가)
 /howto next [숫자]  → next (TODO에서 생성, 기본값: 1)
 /howto all          → all (TODO 전체 생성)
@@ -52,27 +56,50 @@ description: 개발 지식을 howto 문서로 기록하고 관리
 
 ## Action: list
 
-README.md와 TODO.md를 함께 출력.
+README.md와 TODO.md를 함께 출력. 기본 정렬은 작성일 역순 (최신 먼저).
+
+**정렬 옵션:**
+- `/howto` — 최신순 (기본)
+- `/howto --oldest` — 작성순 (오래된 것 먼저)
+- `/howto --alpha` — 알파벳순
+
+**구현:**
+```bash
+# 각 문서의 front matter에서 created 날짜 추출
+for file in docs/howto/*.md; do
+  [ "$(basename "$file")" = "README.md" ] && continue
+  [ "$(basename "$file")" = "TODO.md" ] && continue
+  created=$(grep -m1 "^created:" "$file" 2>/dev/null | cut -d' ' -f2)
+  # front matter 없으면 파일 수정 시간 사용
+  [ -z "$created" ] && created=$(stat -c %Y "$file" 2>/dev/null | xargs -I{} date -d @{} +%Y-%m-%d 2>/dev/null || date +%Y-%m-%d)
+  echo "$created $file"
+done | sort -r  # 최신순 정렬
+```
+
+**기존 문서 마이그레이션:** front matter가 없는 문서는 파일 수정 시간을 기준으로 표시. 정확한 작성일을 원하면 문서에 front matter를 추가.
 
 출력:
 ```markdown
 ## Howto Documents
 
-| 문서 | 설명 |
-|------|------|
-| [setup-fslexyacc-pipeline](setup-fslexyacc-pipeline.md) | FsLexYacc 빌드 설정 |
+| # | 문서 | 설명 | 작성일 |
+|---|------|------|--------|
+| 1 | [handle-errors-with-result](handle-errors-with-result.md) | Result 에러 핸들링 | 2025-01-20 |
+| 2 | [write-fscheck-property-tests](write-fscheck-property-tests.md) | FsCheck 속성 테스트 | 2025-01-18 |
+| 3 | [setup-fslexyacc-pipeline](setup-fslexyacc-pipeline.md) | FsLexYacc 빌드 설정 | 2025-01-15 |
+
+총 3개 | 최신순 정렬
 
 ## TODO
 
 | # | 제목 | 파일명 |
 |---|------|--------|
-| 1 | FsCheck 속성 테스트 | `write-fscheck-property-tests.md` |
-| 2 | Result 에러 핸들링 | `handle-errors-with-result.md` |
+| 1 | 새로운 주제 | `new-topic.md` |
 
 ---
+`/howto --oldest` — 작성순 정렬
 `/howto scan` — 세션에서 주제 발견
 `/howto next` — TODO #1 문서 작성
-`/howto all` — TODO 전체 문서 작성
 ```
 
 ## Action: scan
@@ -201,6 +228,11 @@ grep -l "키워드" docs/howto/*.md
 ## 문서 템플릿
 
 ```markdown
+---
+created: {YYYY-MM-DD}
+description: {한 줄 설명}
+---
+
 # {제목}
 
 {한 줄 설명 - 원리 중심}
@@ -288,13 +320,15 @@ docs/howto/
 ```markdown
 # Howto Documents
 
-| 문서 | 설명 |
-|------|------|
-| [setup-fslexyacc-pipeline](setup-fslexyacc-pipeline.md) | 설명 |
+| # | 문서 | 설명 | 작성일 |
+|---|------|------|--------|
+| 1 | [setup-fslexyacc-pipeline](setup-fslexyacc-pipeline.md) | 설명 | 2025-01-15 |
 
 ---
 총 N개 | 업데이트: YYYY-MM-DD
 ```
+
+**README.md 업데이트 시:** 각 문서의 front matter에서 `created`와 `description`을 읽어 테이블 생성. 기본 정렬은 작성일 역순.
 
 ## TODO.md
 
@@ -354,10 +388,22 @@ docs/howto/
 
 ## 예시
 
-### 목록 + TODO 보기
+### 목록 보기 (최신순, 기본)
 ```
 /howto
-→ 문서 목록과 TODO 표시
+→ 문서 목록 (최신순) + TODO 표시
+```
+
+### 작성순 정렬
+```
+/howto --oldest
+→ 문서 목록 (오래된 것부터) + TODO 표시
+```
+
+### 알파벳순 정렬
+```
+/howto --alpha
+→ 문서 목록 (알파벳순) + TODO 표시
 ```
 
 ### 세션 분석
