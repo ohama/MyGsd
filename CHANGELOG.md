@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.6.0] - 2025-01-29
+
+### Added
+- `/push` command for safe git push with optional tags and PR support
+- `/gsd:health` command for project diagnostics (18 checks)
+
+### Changed
+- Improved version and tag management in GSD workflow
+- Archive phases directory on milestone completion
+- Detect parent `.git` in new-project setup
+- Milestone tag format changed to `milestone[X.Y]`
+- Release command now uses VERSION file only (not milestone version)
+- Push command simplified with minimal defaults
+- Howto documents sorted by creation date
+- Howto quality criteria updated to learner-style
+- Research methodology extracted as reusable skill
+
+### Fixed
+- Git init behavior for parent .git directories
+
+### Removed
+- Obsolete `docs.old` directory
+
 ## [0.5.1] - 2025-01-27
 
 ### Changed
