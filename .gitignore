@@ -33,3 +33,6 @@ logs/
 *.key
 credentials.json
 secrets.json
+
+# Claude Code
+.claude/settings.local.json
