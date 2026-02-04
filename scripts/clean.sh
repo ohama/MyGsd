@@ -25,14 +25,14 @@ fi
 
 # 프로젝트별 문서 (사용자 확인 후 제거)
 HOWTO_CLEANED=""
-if [ -d docs/howto ]; then
+if [ -d documentation/howto ]; then
     echo ""
     echo "⚠️  Howto 문서가 있습니다:"
-    echo "   - docs/howto/"
+    echo "   - documentation/howto/"
     echo ""
     read -p "삭제할까요? [y/N] " answer
     if [ "$answer" = "y" ] || [ "$answer" = "Y" ]; then
-        rm -rf docs/howto/
+        rm -rf documentation/howto/
         HOWTO_CLEANED="yes"
     fi
 fi
@@ -74,7 +74,7 @@ fi
 echo ""
 echo "✅ Cleaned:"
 [ "$PLANNING_CLEANED" = "yes" ] && echo "   - .planning/"
-[ "$HOWTO_CLEANED" = "yes" ] && echo "   - docs/howto/"
+[ "$HOWTO_CLEANED" = "yes" ] && echo "   - documentation/howto/"
 [ "$META_CLEANED" = "yes" ] && echo "   - CHANGELOG.md, README.md, VERSION"
 [ "$GIT_CLEANED" = "yes" ] && echo "   - .git/, .gitignore"
 echo ""

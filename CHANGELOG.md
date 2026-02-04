@@ -39,7 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - `scripts/pack.sh` for packaging `.claude/` to `dist/*.tgz`
 
 ### Changed
-- `clean.sh` now prompts before deleting all items (`.planning/`, `docs/howto/`, meta files)
+- `clean.sh` now prompts before deleting all items (`.planning/`, `documentation/howto/`, meta files)
 
 ## [0.4.0] - 2025-01-26
 
@@ -66,11 +66,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - `scripts/clean.sh` for new project initialization
 
 ### Changed
-- Improved clean.sh with .planning/, docs/howto/, git tags cleanup
+- Improved clean.sh with .planning/, documentation/howto/, git tags cleanup
 - Added .gitignore with common patterns
 
 ### Removed
-- `docs/howto/` directory (project-specific, cleaned for fresh start)
+- `documentation/howto/` directory (project-specific, cleaned for fresh start)
 
 ## [0.1.0] - 2025-01-25
 

@@ -67,7 +67,7 @@ npx get-shit-done-cc@latest
 
 | 스크립트 | 설명 |
 |----------|------|
-| `scripts/clean.sh` | 새 프로젝트 시작 전 정리 (메타 파일, .planning/, docs/howto/, Git 태그) |
+| `scripts/clean.sh` | 새 프로젝트 시작 전 정리 (메타 파일, .planning/, documentation/howto/, Git 태그) |
 
 ## 구조
 
@@ -82,7 +82,7 @@ npx get-shit-done-cc@latest
 │   └── gsd/          # GSD 스킬 (11개) ✨
 ├── hooks/            # Node.js 훅 스크립트
 ├── get-shit-done/    # GSD 코어 시스템
-└── docs/             # 문서
+└── documentation/    # 문서 (GitHub Pages가 docs/ 사용)
 ```
 
 ✨ = 추가된 항목
@@ -104,7 +104,7 @@ npx get-shit-done-cc@latest
 
 ### Howto 문서
 
-개발 지식을 `docs/howto/`에 기록:
+개발 지식을 `documentation/howto/`에 기록:
 
 ```bash
 # 세션 작업 기록
