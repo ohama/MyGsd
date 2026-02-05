@@ -3,13 +3,13 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Claude Code 설정 가이드</title>
+        <title>Claude Code Tutorial</title>
         <meta name="robots" content="noindex">
 
 
         <!-- Custom HTML head -->
 
-        <meta name="description" content="Claude Code .claude/ 디렉토리 사용법 튜토리얼">
+        <meta name="description" content="Claude Code의 .claude/ 디렉토리 설정 및 활용 가이드">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
@@ -36,10 +36,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-280f3b04.js";
+            window.path_to_searchindex_js = "searchindex-858d04c3.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ae14f967.js"></script>
+        <script src="toc-63216d55.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -138,7 +138,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">Claude Code 설정 가이드</h1>
+                    <h1 class="menu-title">Claude Code Tutorial</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -178,27 +178,10 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="claude-code-설정-가이드"><a class="header" href="#claude-code-설정-가이드">Claude Code 설정 가이드</a></h1>
-<p>Claude Code의 <code>.claude/</code> 디렉토리를 활용하여 프로젝트별 설정, 명령어, 스킬, 에이전트, 훅을 정의하는 방법을 다룹니다.</p>
-<p>실제 프로젝트(LangTutorial)에서 <code>.claude/</code>를 어떻게 활용했는지 참고하여, 각 구성요소의 역할과 작성법을 단계별로 설명합니다.</p>
-<h2 id="대상-독자"><a class="header" href="#대상-독자">대상 독자</a></h2>
-<ul>
-<li>Claude Code를 사용하는 개발자</li>
-<li>프로젝트별로 Claude의 동작을 커스터마이즈하고 싶은 사람</li>
-<li>GSD 프레임워크의 내부 구조를 이해하고 싶은 사람</li>
-</ul>
-<h2 id="구성"><a class="header" href="#구성">구성</a></h2>
-<ol>
-<li><a href="#chapter-1-claude-디렉토리-개요">개요</a> - .claude/ 디렉토리 구조와 동작 원리</li>
-<li><a href="#chapter-2-settings-설정">Settings</a> - settings.json과 settings.local.json</li>
-<li><a href="#chapter-3-commands-슬래시-명령어">Commands</a> - 슬래시 명령어 작성법</li>
-<li><a href="#chapter-4-skills-스킬">Skills</a> - 자동 적용 규칙 정의</li>
-<li><a href="#chapter-5-agents-에이전트">Agents</a> - AI 서브프로세스 정의</li>
-<li><a href="#chapter-6-hooks-훅">Hooks</a> - 이벤트 기반 Node.js 스크립트</li>
-<li><a href="#chapter-7-실전-활용-사례">실전 활용</a> - LangTutorial 사례와 단계별 가이드</li>
-</ol>
+                        <h1 id="claude-code-tutorial"><a class="header" href="#claude-code-tutorial">Claude Code Tutorial</a></h1>
+<p>Claude Code의 .claude/ 디렉토리 설정 및 활용 가이드</p>
 <h2 id="시작하기"><a class="header" href="#시작하기">시작하기</a></h2>
-<p><a href="#chapter-1-claude-디렉토리-개요">Chapter 1: 개요</a>부터 시작하세요.</p>
+<p><a href="#chapter-1-claude-디렉토리-개요">.claude/ 디렉토리 개요</a>부터 시작하세요.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="chapter-1-claude-디렉토리-개요"><a class="header" href="#chapter-1-claude-디렉토리-개요">Chapter 1: .claude/ 디렉토리 개요</a></h1>
 <h2 id="claude-란"><a class="header" href="#claude-란">.claude/ 란?</a></h2>

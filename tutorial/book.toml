@@ -1,0 +1,22 @@
+[book]
+title = "Claude Code Tutorial"
+authors = ["ohama"]
+language = "ko"
+description = "Claude Code의 .claude/ 디렉토리 설정 및 활용 가이드"
+src = "."
+
+[build]
+build-dir = "../docs"
+create-missing = false
+
+[output.html]
+default-theme = "light"
+preferred-dark-theme = "navy"
+git-repository-url = "https://github.com/ohama/MyGsd"
+edit-url-template = "https://github.com/ohama/MyGsd/edit/master/tutorial/{path}"
+
+[output.html.search]
+enable = true
+limit-results = 30
+boost-title = 2
+boost-hierarchy = 1

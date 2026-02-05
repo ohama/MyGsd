@@ -149,6 +149,10 @@ npx get-shit-done-cc@latest
 - 태스크별 원자적 Git 커밋
 - 마크다운 문서를 통한 세션 간 상태 유지
 
+## Documentation
+
+[Claude Code Tutorial](https://ohama.github.io/MyGsd/)
+
 ## 라이선스
 
 원본 프로젝트의 라이선스를 따릅니다.
