@@ -6,6 +6,10 @@ Claude Code를 위한 체계적인 프로젝트 관리 워크플로우 시스템
 >
 > 원본 프로젝트를 Claude Code 환경에 맞게 수정하고, 추가 명령어를 포함했습니다.
 
+## Documentation
+
+[Claude Code Tutorial](https://ohama.github.io/MyGsd/)
+
 ## 개요
 
 GSD는 "컨텍스트 로트(context rot)" 문제를 해결합니다 — Claude가 긴 개발 세션 동안 컨텍스트 윈도우를 채우면서 발생하는 품질 저하.
@@ -148,10 +152,6 @@ npx get-shit-done-cc@latest
 - 멀티 에이전트 오케스트레이션
 - 태스크별 원자적 Git 커밋
 - 마크다운 문서를 통한 세션 간 상태 유지
-
-## Documentation
-
-[Claude Code Tutorial](https://ohama.github.io/MyGsd/)
 
 ## 라이선스
 
