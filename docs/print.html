@@ -1,0 +1,1603 @@
+<!DOCTYPE HTML>
+<html lang="ko" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Claude Code 설정 가이드</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Claude Code .claude/ 디렉토리 사용법 튜토리얼">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-2459343d.css">
+        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-280f3b04.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-ae14f967.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Claude Code 설정 가이드</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/ohama/MyGsd" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="claude-code-설정-가이드"><a class="header" href="#claude-code-설정-가이드">Claude Code 설정 가이드</a></h1>
+<p>Claude Code의 <code>.claude/</code> 디렉토리를 활용하여 프로젝트별 설정, 명령어, 스킬, 에이전트, 훅을 정의하는 방법을 다룹니다.</p>
+<p>실제 프로젝트(LangTutorial)에서 <code>.claude/</code>를 어떻게 활용했는지 참고하여, 각 구성요소의 역할과 작성법을 단계별로 설명합니다.</p>
+<h2 id="대상-독자"><a class="header" href="#대상-독자">대상 독자</a></h2>
+<ul>
+<li>Claude Code를 사용하는 개발자</li>
+<li>프로젝트별로 Claude의 동작을 커스터마이즈하고 싶은 사람</li>
+<li>GSD 프레임워크의 내부 구조를 이해하고 싶은 사람</li>
+</ul>
+<h2 id="구성"><a class="header" href="#구성">구성</a></h2>
+<ol>
+<li><a href="#chapter-1-claude-디렉토리-개요">개요</a> - .claude/ 디렉토리 구조와 동작 원리</li>
+<li><a href="#chapter-2-settings-설정">Settings</a> - settings.json과 settings.local.json</li>
+<li><a href="#chapter-3-commands-슬래시-명령어">Commands</a> - 슬래시 명령어 작성법</li>
+<li><a href="#chapter-4-skills-스킬">Skills</a> - 자동 적용 규칙 정의</li>
+<li><a href="#chapter-5-agents-에이전트">Agents</a> - AI 서브프로세스 정의</li>
+<li><a href="#chapter-6-hooks-훅">Hooks</a> - 이벤트 기반 Node.js 스크립트</li>
+<li><a href="#chapter-7-실전-활용-사례">실전 활용</a> - LangTutorial 사례와 단계별 가이드</li>
+</ol>
+<h2 id="시작하기"><a class="header" href="#시작하기">시작하기</a></h2>
+<p><a href="#chapter-1-claude-디렉토리-개요">Chapter 1: 개요</a>부터 시작하세요.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="chapter-1-claude-디렉토리-개요"><a class="header" href="#chapter-1-claude-디렉토리-개요">Chapter 1: .claude/ 디렉토리 개요</a></h1>
+<h2 id="claude-란"><a class="header" href="#claude-란">.claude/ 란?</a></h2>
+<p><code>.claude/</code> 디렉토리는 Claude Code의 <strong>프로젝트별 설정 디렉토리</strong>다.
+이 디렉토리에 설정, 명령어, 스킬, 에이전트, 훅을 정의하면 Claude Code가 프로젝트 맥락에 맞게 동작한다.</p>
+<p>핵심 아이디어: <strong>Claude Code의 행동을 코드로 정의한다.</strong></p>
+<h2 id="디렉토리-구조"><a class="header" href="#디렉토리-구조">디렉토리 구조</a></h2>
+<pre><code>.claude/
+├── settings.json          # 공유 설정 (hooks, statusLine)
+├── settings.local.json    # 로컬 전용 설정 (gitignore됨)
+├── .gitignore             # 로컬 설정 파일 제외
+├── commands/              # 슬래시 명령어 (/commit, /push 등)
+├── skills/                # 스킬 정의 (재사용 가능한 규칙/방법론)
+├── agents/                # AI 에이전트 정의 (Task 도구로 실행)
+└── hooks/                 # 이벤트 기반 스크립트 (Node.js)
+</code></pre>
+<h3 id="각-디렉토리의-역할"><a class="header" href="#각-디렉토리의-역할">각 디렉토리의 역할</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>디렉토리</th><th>역할</th><th>파일 형식</th><th>호출 방식</th></tr>
+</thead>
+<tbody>
+<tr><td><code>commands/</code></td><td>사용자가 실행하는 명령</td><td>Markdown</td><td><code>/명령어</code></td></tr>
+<tr><td><code>skills/</code></td><td>Claude가 자동 적용하는 규칙</td><td>Markdown (YAML frontmatter)</td><td>자동 또는 에이전트가 참조</td></tr>
+<tr><td><code>agents/</code></td><td>독립 실행되는 AI 서브프로세스</td><td>Markdown (YAML frontmatter)</td><td>Task 도구로 spawn</td></tr>
+<tr><td><code>hooks/</code></td><td>이벤트 트리거 스크립트</td><td>JavaScript (Node.js)</td><td>settings.json에서 등록</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="submodule로-여러-프로젝트에서-공유"><a class="header" href="#submodule로-여러-프로젝트에서-공유">Submodule로 여러 프로젝트에서 공유</a></h2>
+<p><code>.claude/</code> 디렉토리를 <strong>Git submodule</strong>로 관리하면 여러 프로젝트에서 동일한 설정을 공유할 수 있다.</p>
+<pre><code class="language-bash"># 새 프로젝트에 추가
+git submodule add git@github.com:user/Claude-Config.git .claude
+
+# 기존 프로젝트 클론 시
+git clone --recurse-submodules &lt;repo-url&gt;
+</code></pre>
+<h3 id="공유-vs-로컬"><a class="header" href="#공유-vs-로컬">공유 vs 로컬</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>파일</th><th>공유</th><th>설명</th></tr>
+</thead>
+<tbody>
+<tr><td><code>settings.json</code></td><td>O</td><td>hooks, statusLine 등 공유 설정</td></tr>
+<tr><td><code>settings.local.json</code></td><td>X</td><td>프로젝트별 권한 (gitignore)</td></tr>
+<tr><td><code>commands/</code></td><td>O</td><td>모든 프로젝트에서 사용 가능</td></tr>
+<tr><td><code>skills/</code></td><td>일부</td><td>GSD 스킬은 공유, 프로젝트 스킬은 로컬</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="설정-변경-시-동기화"><a class="header" href="#설정-변경-시-동기화">설정 변경 시 동기화</a></h3>
+<pre><code class="language-bash"># Project A에서 변경 후 push
+cd .claude &amp;&amp; git add -A &amp;&amp; git commit -m "feat: new command" &amp;&amp; git push
+cd .. &amp;&amp; git add .claude &amp;&amp; git commit -m "chore: update .claude submodule"
+
+# Project B에서 pull
+cd .claude &amp;&amp; git pull origin master
+cd .. &amp;&amp; git add .claude &amp;&amp; git commit -m "chore: update .claude submodule"
+</code></pre>
+<h2 id="동작-원리"><a class="header" href="#동작-원리">동작 원리</a></h2>
+<p>Claude Code는 세션 시작 시 <code>.claude/</code> 디렉토리를 읽어 다음을 수행한다:</p>
+<ol>
+<li><strong>settings.json</strong> 로드 → hooks 실행, statusLine 표시</li>
+<li><strong>commands/</strong> 스캔 → <code>/명령어</code>로 사용 가능한 명령 등록</li>
+<li><strong>skills/</strong> 스캔 → 관련 작업 시 자동 적용할 규칙 인식</li>
+<li><strong>agents/</strong> 스캔 → Task 도구에서 spawn 가능한 에이전트 등록</li>
+</ol>
+<pre><code>세션 시작
+  │
+  ├─ settings.json 로드
+  │   ├─ SessionStart hooks 실행
+  │   └─ statusLine 설정
+  │
+  ├─ commands/ 등록
+  │   └─ /commit, /push, /howto ...
+  │
+  ├─ skills/ 인식
+  │   └─ markdown-image-insertion, mdbook-docs-images ...
+  │
+  └─ agents/ 등록
+      └─ gsd-planner, gsd-executor ...
+</code></pre>
+<h2 id="다음-장"><a class="header" href="#다음-장">다음 장</a></h2>
+<ul>
+<li><a href="#chapter-2-settings-설정">Chapter 2: Settings 설정</a> - settings.json과 settings.local.json</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="chapter-2-settings-설정"><a class="header" href="#chapter-2-settings-설정">Chapter 2: Settings 설정</a></h1>
+<h2 id="두-개의-설정-파일"><a class="header" href="#두-개의-설정-파일">두 개의 설정 파일</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>파일</th><th>공유</th><th>용도</th></tr>
+</thead>
+<tbody>
+<tr><td><code>settings.json</code></td><td>O (git tracked)</td><td>hooks, statusLine 등 공통 설정</td></tr>
+<tr><td><code>settings.local.json</code></td><td>X (gitignored)</td><td>프로젝트별 권한, 허용 명령</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="settingsjson"><a class="header" href="#settingsjson">settings.json</a></h2>
+<p>프로젝트의 공유 설정 파일이다. 모든 협업자(또는 submodule 사용 프로젝트)에게 동일하게 적용된다.</p>
+<h3 id="실제-예시"><a class="header" href="#실제-예시">실제 예시</a></h3>
+<pre><code class="language-json">{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/gsd-check-update.js"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "node .claude/hooks/gsd-statusline.js"
+  }
+}
+</code></pre>
+<h3 id="hooks-설정"><a class="header" href="#hooks-설정">hooks 설정</a></h3>
+<p><code>hooks</code>는 특정 이벤트 발생 시 실행할 명령을 정의한다.</p>
+<pre><code class="language-json">{
+  "hooks": {
+    "&lt;이벤트명&gt;": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "&lt;실행할 명령&gt;"
+          }
+        ]
+      }
+    ]
+  }
+}
+</code></pre>
+<p><strong>지원 이벤트:</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>이벤트</th><th>발생 시점</th></tr>
+</thead>
+<tbody>
+<tr><td><code>SessionStart</code></td><td>Claude Code 세션 시작 시</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>예시: 세션 시작 시 버전 체크</strong></p>
+<pre><code class="language-json">{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/gsd-check-update.js"
+          }
+        ]
+      }
+    ]
+  }
+}
+</code></pre>
+<h3 id="statusline-설정"><a class="header" href="#statusline-설정">statusLine 설정</a></h3>
+<p>Claude Code 하단 상태 표시줄에 표시할 정보를 정의한다.</p>
+<pre><code class="language-json">{
+  "statusLine": {
+    "type": "command",
+    "command": "node .claude/hooks/gsd-statusline.js"
+  }
+}
+</code></pre>
+<p>이 명령은 주기적으로 실행되어 현재 프로젝트 상태(진행 중인 phase, 프로젝트명 등)를 상태줄에 표시한다.</p>
+<h2 id="settingslocaljson"><a class="header" href="#settingslocaljson">settings.local.json</a></h2>
+<p>프로젝트별 로컬 설정이다. <code>.gitignore</code>에 포함되어 공유되지 않는다.</p>
+<p>주로 <strong>권한(permissions)</strong> 을 정의하여 Claude Code가 특정 bash 명령, 스킬, 웹 접근을 할 수 있도록 허용한다.</p>
+<h3 id="구조"><a class="header" href="#구조">구조</a></h3>
+<pre><code class="language-json">{
+  "permissions": {
+    "allow": [
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(npm run *)",
+      "Skill(commit)",
+      "Skill(push)",
+      "WebFetch(github.com:*)"
+    ]
+  }
+}
+</code></pre>
+<h3 id="권한-패턴"><a class="header" href="#권한-패턴">권한 패턴</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>패턴</th><th>설명</th></tr>
+</thead>
+<tbody>
+<tr><td><code>Bash(git add *)</code></td><td><code>git add</code> 명령 허용</td></tr>
+<tr><td><code>Bash(git commit *)</code></td><td><code>git commit</code> 명령 허용</td></tr>
+<tr><td><code>Bash(npm run *)</code></td><td>npm 스크립트 실행 허용</td></tr>
+<tr><td><code>Skill(commit)</code></td><td><code>/commit</code> 스킬 실행 허용</td></tr>
+<tr><td><code>WebFetch(github.com:*)</code></td><td>GitHub 웹 접근 허용</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="실제-예시-langtutorial-프로젝트"><a class="header" href="#실제-예시-langtutorial-프로젝트">실제 예시 (LangTutorial 프로젝트)</a></h3>
+<pre><code class="language-json">{
+  "permissions": {
+    "allow": [
+      "Bash(git add .claude)",
+      "Bash(git commit -m \"chore: update .claude submodule\")",
+      "Bash(git submodule update --remote .claude)",
+      "Bash(cd .claude &amp;&amp; git fetch origin)",
+      "Bash(cd .claude &amp;&amp; git pull origin master)",
+      "Bash(ls -la .claude/)",
+      "Skill(commit)",
+      "Skill(push)",
+      "Skill(release)",
+      "Skill(claude-config)"
+    ]
+  }
+}
+</code></pre>
+<h3 id="왜-분리하는가"><a class="header" href="#왜-분리하는가">왜 분리하는가?</a></h3>
+<ul>
+<li><code>settings.json</code>: 모든 프로젝트에서 동일한 기본 동작 (hooks, 상태줄)</li>
+<li><code>settings.local.json</code>: 프로젝트마다 다른 권한 (dotnet 프로젝트는 <code>dotnet</code> 허용, node 프로젝트는 <code>npm</code> 허용)</li>
+</ul>
+<h2 id="설정-우선순위"><a class="header" href="#설정-우선순위">설정 우선순위</a></h2>
+<p><code>settings.local.json</code>이 <code>settings.json</code>보다 우선한다.
+동일한 키가 있으면 local이 덮어쓴다.</p>
+<h2 id="최소-설정으로-시작하기"><a class="header" href="#최소-설정으로-시작하기">최소 설정으로 시작하기</a></h2>
+<p>처음에는 빈 <code>settings.json</code>으로 시작해도 된다:</p>
+<pre><code class="language-json">{}
+</code></pre>
+<p>필요에 따라 hooks, statusLine을 추가한다.
+<code>settings.local.json</code>은 Claude Code가 권한을 요청할 때 자동으로 생성/업데이트되기도 한다.</p>
+<h2 id="다음-장-1"><a class="header" href="#다음-장-1">다음 장</a></h2>
+<ul>
+<li><a href="#chapter-3-commands-슬래시-명령어">Chapter 3: Commands 슬래시 명령어</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="chapter-3-commands-슬래시-명령어"><a class="header" href="#chapter-3-commands-슬래시-명령어">Chapter 3: Commands (슬래시 명령어)</a></h1>
+<h2 id="commands란"><a class="header" href="#commands란">Commands란?</a></h2>
+<p>Commands는 사용자가 <code>/명령어</code>로 실행하는 <strong>대화형 명령</strong>이다.
+<code>.claude/commands/</code> 디렉토리에 Markdown 파일로 정의한다.</p>
+<pre><code>.claude/commands/
+├── commit.md          → /commit
+├── push.md            → /push
+├── release.md         → /release
+├── howto.md           → /howto
+├── tutorial.md        → /tutorial
+└── gsd/               → /gsd:* (하위 디렉토리 = 네임스페이스)
+    ├── plan-phase.md  → /gsd:plan-phase
+    ├── execute-phase.md → /gsd:execute-phase
+    └── ...
+</code></pre>
+<p><strong>파일명이 곧 명령어명이다:</strong></p>
+<ul>
+<li><code>commit.md</code> → <code>/commit</code></li>
+<li><code>gsd/plan-phase.md</code> → <code>/gsd:plan-phase</code></li>
+</ul>
+<h2 id="command-파일-구조"><a class="header" href="#command-파일-구조">Command 파일 구조</a></h2>
+<h3 id="기본-구조"><a class="header" href="#기본-구조">기본 구조</a></h3>
+<pre><code class="language-markdown">---
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep
+description: 이 명령어의 한 줄 설명
+---
+
+명령어 실행 시 Claude가 따를 지시문 (자유 형식 Markdown)
+</code></pre>
+<h3 id="frontmatter-yaml"><a class="header" href="#frontmatter-yaml">Frontmatter (YAML)</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>필드</th><th>필수</th><th>설명</th></tr>
+</thead>
+<tbody>
+<tr><td><code>allowed-tools</code></td><td>선택</td><td>이 명령 실행 시 사용 가능한 도구</td></tr>
+<tr><td><code>description</code></td><td>권장</td><td>명령어 목록에 표시될 설명</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="본문"><a class="header" href="#본문">본문</a></h3>
+<p>본문은 Claude에게 전달되는 <strong>프롬프트</strong>다.
+자유 형식이지만, 보통 다음 섹션으로 구성한다:</p>
+<ol>
+<li><strong>역할 정의</strong> - Claude의 역할</li>
+<li><strong>사용법</strong> - 명령어 인자와 옵션</li>
+<li><strong>실행 순서</strong> - Step별 동작</li>
+<li><strong>예시</strong> - 입출력 예시</li>
+</ol>
+<h2 id="실전-예시-1-commit"><a class="header" href="#실전-예시-1-commit">실전 예시 1: /commit</a></h2>
+<p>Git 커밋을 도와주는 명령어. 파일 분석, .gitignore 관리, Conventional Commits 형식 메시지 생성까지 자동화한다.</p>
+<pre><code class="language-markdown">---
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep, AskUserQuestion
+description: Git 초기화, .gitignore 관리, 스마트 커밋
+---
+
+&lt;role&gt;
+당신은 커밋 관리자입니다. Git 저장소 초기화, .gitignore 관리,
+변경사항 분석 후 사용자와 함께 커밋을 생성합니다.
+&lt;/role&gt;
+
+&lt;commands&gt;
+
+## 사용법
+
+| 명령 | 설명 |
+|------|------|
+| `/commit` | 전체 워크플로우 실행 |
+| `/commit -m "메시지"` | 메시지 지정하여 커밋 |
+
+&lt;/commands&gt;
+
+&lt;execution&gt;
+
+## Step 1: Git 저장소 확인
+git rev-parse --is-inside-work-tree 실행
+실패 시 git init
+
+## Step 2: .gitignore 확인
+없으면 기본 템플릿 생성
+
+## Step 3: 새 파일 분석
+.env, *.log 등 gitignore 후보 탐지
+
+## Step 4: 변경사항 분석
+파일을 디렉토리/유형/기능으로 그룹화
+
+## Step 5: 커밋 방식 질문
+[A] 한꺼번에 [G] 그룹별
+
+## Step 6: 커밋 메시지 생성
+Conventional Commits 형식으로 자동 생성
+
+## Step 7: 커밋 실행 및 결과 표시
+
+&lt;/execution&gt;
+</code></pre>
+<h3 id="핵심-패턴"><a class="header" href="#핵심-패턴">핵심 패턴</a></h3>
+<ul>
+<li><code>&lt;role&gt;</code>: Claude의 역할 정의</li>
+<li><code>&lt;commands&gt;</code>: 사용법 표</li>
+<li><code>&lt;execution&gt;</code>: Step별 실행 순서</li>
+<li><code>&lt;examples&gt;</code>: 입출력 예시</li>
+</ul>
+<h2 id="실전-예시-2-tutorial-프로젝트-전용"><a class="header" href="#실전-예시-2-tutorial-프로젝트-전용">실전 예시 2: /tutorial (프로젝트 전용)</a></h2>
+<p>LangTutorial 프로젝트에서 만든 <strong>프로젝트 전용 명령어</strong>다.
+튜토리얼 문서의 목록, 작성, PDF 변환을 관리한다.</p>
+<pre><code class="language-markdown"># Tutorial Command
+
+튜토리얼 문서 목록을 표시하고 작성을 관리한다.
+
+## 실행 시 동작
+
+1. **문서 목록 표시**: tutorial/ 디렉토리의 모든 문서 파일 나열
+2. **상태 표시**: 각 문서의 완성 상태 (✓ 완성 / ○ 미작성)
+3. **다음 작성 제안**: 아직 작성되지 않은 다음 문서 추천
+
+## 문서 구조
+
+| Chapter | 파일명 | 내용 |
+|---------|--------|------|
+| 1 | chapter-01-foundation.md | 프로젝트 설정 |
+| 2 | chapter-02-arithmetic.md | 사칙연산 |
+| ... | ... | ... |
+
+## 인자 처리
+
+| 명령 | 설명 |
+|------|------|
+| `/tutorial` | 문서 목록 표시 |
+| `/tutorial &lt;번호&gt;` | 해당 chapter 작성 시작 |
+| `/tutorial pdf` | PDF 생성 |
+</code></pre>
+<h3 id="포인트"><a class="header" href="#포인트">포인트</a></h3>
+<ul>
+<li>frontmatter 없이도 동작한다 (본문만으로 충분)</li>
+<li>프로젝트 특화 지식(문서 구조, CLI 인터페이스)을 명령어에 담을 수 있다</li>
+<li>인자에 따라 다른 동작을 정의할 수 있다</li>
+</ul>
+<h2 id="실전-예시-3-howto-지식-관리"><a class="header" href="#실전-예시-3-howto-지식-관리">실전 예시 3: /howto (지식 관리)</a></h2>
+<p>세션에서 배운 것을 문서로 기록하는 명령어.</p>
+<pre><code class="language-markdown">---
+allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+description: 개발 지식을 howto 문서로 기록하고 관리
+---
+
+&lt;role&gt;
+개발 지식 기록 도우미. 작업 중 배운 것, 해결한 문제,
+반복 패턴을 docs/howto/에 기록.
+&lt;/role&gt;
+
+&lt;commands&gt;
+| 명령 | 설명 |
+|------|------|
+| `/howto` | 문서 목록 + TODO |
+| `/howto scan` | 세션 분석 → TODO에 추가 |
+| `/howto next` | TODO에서 문서 생성 |
+| `/howto new 제목` | 직접 문서 생성 |
+&lt;/commands&gt;
+</code></pre>
+<h2 id="하위-디렉토리--네임스페이스"><a class="header" href="#하위-디렉토리--네임스페이스">하위 디렉토리 = 네임스페이스</a></h2>
+<p>디렉토리를 만들면 자동으로 네임스페이스가 된다:</p>
+<pre><code>commands/
+├── commit.md             → /commit
+├── push.md               → /push
+└── gsd/
+    ├── plan-phase.md     → /gsd:plan-phase
+    ├── execute-phase.md  → /gsd:execute-phase
+    └── debug.md          → /gsd:debug
+</code></pre>
+<p>GSD 프레임워크는 <code>gsd/</code> 네임스페이스에 27개 명령어를 정의하여 프로젝트 관리 워크플로우 전체를 명령어로 제어한다.</p>
+<h2 id="command-작성-가이드"><a class="header" href="#command-작성-가이드">Command 작성 가이드</a></h2>
+<h3 id="1-역할을-명확히-정의한다"><a class="header" href="#1-역할을-명확히-정의한다">1. 역할을 명확히 정의한다</a></h3>
+<pre><code class="language-markdown">&lt;role&gt;
+당신은 릴리스 관리자입니다.
+버전 번호를 올리고, CHANGELOG를 작성하고,
+git tag를 생성합니다.
+&lt;/role&gt;
+</code></pre>
+<h3 id="2-step별로-실행-순서를-명시한다"><a class="header" href="#2-step별로-실행-순서를-명시한다">2. Step별로 실행 순서를 명시한다</a></h3>
+<pre><code class="language-markdown">## Step 1: 현재 버전 확인
+VERSION 파일 읽기
+
+## Step 2: 버전 범프
+patch/minor/major 선택
+
+## Step 3: CHANGELOG 생성
+git log에서 변경사항 추출
+</code></pre>
+<h3 id="3-인자-처리를-테이블로-정리한다"><a class="header" href="#3-인자-처리를-테이블로-정리한다">3. 인자 처리를 테이블로 정리한다</a></h3>
+<pre><code class="language-markdown">| 명령 | 설명 |
+|------|------|
+| `/release` | 대화형으로 버전 선택 |
+| `/release patch` | 패치 버전 올림 |
+| `/release minor` | 마이너 버전 올림 |
+</code></pre>
+<h3 id="4-에지-케이스를-미리-정의한다"><a class="header" href="#4-에지-케이스를-미리-정의한다">4. 에지 케이스를 미리 정의한다</a></h3>
+<pre><code class="language-markdown">&lt;edge_cases&gt;
+### 변경사항 없음
+"커밋할 변경사항이 없습니다" 출력
+
+### 훅 실패
+원인 분석 후 해결 방법 제시
+&lt;/edge_cases&gt;
+</code></pre>
+<h2 id="범용-vs-프로젝트-전용"><a class="header" href="#범용-vs-프로젝트-전용">범용 vs 프로젝트 전용</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>유형</th><th>예시</th><th>공유</th></tr>
+</thead>
+<tbody>
+<tr><td>범용</td><td><code>/commit</code>, <code>/push</code>, <code>/release</code></td><td>submodule로 공유</td></tr>
+<tr><td>프로젝트 전용</td><td><code>/tutorial</code>, <code>/deploy</code></td><td>해당 프로젝트만</td></tr>
+</tbody>
+</table>
+</div>
+<p>범용 명령어는 submodule의 <code>commands/</code>에, 프로젝트 전용은 프로젝트 루트의 <code>.claude/commands/</code>에 넣는다.</p>
+<h2 id="다음-장-2"><a class="header" href="#다음-장-2">다음 장</a></h2>
+<ul>
+<li><a href="#chapter-4-skills-스킬">Chapter 4: Skills 스킬</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="chapter-4-skills-스킬"><a class="header" href="#chapter-4-skills-스킬">Chapter 4: Skills (스킬)</a></h1>
+<h2 id="skills란"><a class="header" href="#skills란">Skills란?</a></h2>
+<p>Skills는 Claude가 특정 작업을 할 때 <strong>자동으로 적용하는 규칙과 방법론</strong>이다.
+Commands가 사용자가 명시적으로 실행하는 것이라면, Skills는 <strong>Claude가 스스로 판단하여 적용</strong>한다.</p>
+<pre><code>Commands = 사용자가 실행   → /commit
+Skills   = Claude가 적용   → "Markdown 작성 시 이미지 규칙 자동 적용"
+</code></pre>
+<h2 id="command-vs-skill-비교"><a class="header" href="#command-vs-skill-비교">Command vs Skill 비교</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>항목</th><th>Command</th><th>Skill</th></tr>
+</thead>
+<tbody>
+<tr><td>호출 방식</td><td>사용자가 <code>/명령어</code> 실행</td><td>Claude가 자동 판단 또는 에이전트가 참조</td></tr>
+<tr><td>파일 위치</td><td><code>commands/</code></td><td><code>skills/</code></td></tr>
+<tr><td>목적</td><td>특정 작업 수행</td><td>일관된 규칙/패턴 강제</td></tr>
+<tr><td>frontmatter</td><td><code>allowed-tools</code>, <code>description</code></td><td><code>name</code>, <code>description</code>, <code>trigger</code>, <code>consumers</code></td></tr>
+<tr><td>예시</td><td><code>/commit</code> (커밋 실행)</td><td>markdown-image-insertion (이미지 규칙)</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="skill-파일-구조"><a class="header" href="#skill-파일-구조">Skill 파일 구조</a></h2>
+<h3 id="기본-구조-1"><a class="header" href="#기본-구조-1">기본 구조</a></h3>
+<pre><code class="language-markdown">---
+name: skill-name
+description: 이 스킬이 하는 일 설명
+trigger: 어떤 상황에서 적용되는지
+consumers:
+  - 이 스킬을 사용하는 대상 1
+  - 이 스킬을 사용하는 대상 2
+---
+
+# 스킬 제목
+
+스킬의 규칙과 방법론 (자유 형식 Markdown)
+</code></pre>
+<h3 id="frontmatter-필드"><a class="header" href="#frontmatter-필드">Frontmatter 필드</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>필드</th><th>필수</th><th>설명</th></tr>
+</thead>
+<tbody>
+<tr><td><code>name</code></td><td>권장</td><td>스킬 식별자 (kebab-case)</td></tr>
+<tr><td><code>description</code></td><td>권장</td><td>스킬이 하는 일 한 줄 설명</td></tr>
+<tr><td><code>trigger</code></td><td>권장</td><td>이 스킬이 자동 적용되는 조건</td></tr>
+<tr><td><code>consumers</code></td><td>선택</td><td>이 스킬을 참조하는 대상 목록</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="실전-예시-1-markdown-image-insertion"><a class="header" href="#실전-예시-1-markdown-image-insertion">실전 예시 1: markdown-image-insertion</a></h2>
+<p>Markdown 문서에 이미지를 삽입할 때 적용되는 규칙 스킬이다.</p>
+<pre><code class="language-markdown">---
+name: markdown-image-insertion
+description: Markdown 문서 내 이미지 삽입 규칙을 강제하는 스킬
+trigger: Markdown 문서를 생성·편집할 때 자동 적용
+consumers:
+  - 문서 작성 작업
+  - mdbook-docs-images skill
+---
+
+# Markdown + Image Insertion Rules
+
+Markdown 문서를 생성할 때 이 문서를 **절대 규칙(spec)** 으로 사용한다.
+
+## 1. 기본 원칙 (Must Rules)
+
+1. 이미지 삽입은 **Markdown 표준 문법만 사용**
+2. 이미지 경로는 **상대경로만 사용**
+3. 모든 이미지는 `images/` 디렉토리 하위에 위치
+4. 실제 이미지 파일은 생성하지 않음
+5. 모든 이미지에는 **의미 있는 alt text** 포함
+
+## 2. 허용되는 이미지 문법
+
+![대체 텍스트](images/파일명.png)
+
+## 3. HTML 사용 규칙
+
+- HTML 사용 **금지**
+- 사람이 명시적으로 요청한 경우만 예외
+
+## 4. 자체 검증 체크리스트
+
+- [ ] 모든 이미지가 images/ 상대경로인가?
+- [ ] alt text가 의미를 설명하는가?
+- [ ] HTML 남용이 없는가?
+</code></pre>
+<h3 id="이-스킬의-효과"><a class="header" href="#이-스킬의-효과">이 스킬의 효과</a></h3>
+<p>Claude가 Markdown 문서를 작성할 때 <strong>자동으로</strong> 이 규칙을 따른다:</p>
+<ul>
+<li><code>![](https://example.com/img.png)</code> 대신 <code>![설명](images/img.png)</code> 사용</li>
+<li>HTML <code>&lt;img&gt;</code> 태그 사용하지 않음</li>
+<li>이미지마다 의미 있는 alt text 작성</li>
+</ul>
+<h2 id="실전-예시-2-mdbook-docs-images"><a class="header" href="#실전-예시-2-mdbook-docs-images">실전 예시 2: mdbook-docs-images</a></h2>
+<p>mdBook 전용 문서 규칙 스킬이다. 위의 markdown-image-insertion 스킬을 <strong>확장</strong>한다.</p>
+<pre><code class="language-markdown">---
+name: mdbook-docs-images
+description: mdBook 문서 작성 시 이미지·구조·렌더링 규칙을 강제하는 스킬
+trigger: mdBook 기반 문서를 생성·편집할 때 자동 적용
+consumers:
+  - mdbook command
+  - 문서 작성 작업
+---
+
+# mdBook 문서 · 그림 규칙
+
+## 1. mdBook 기본 구조 규칙
+
+book/
+ ├─ src/
+ │   ├─ SUMMARY.md
+ │   ├─ chapter_01.md
+ │   └─ images/
+ └─ book.toml
+
+## 2. SUMMARY.md 작성 규칙
+
+모든 문서는 SUMMARY.md에 등록되어야 한다.
+
+## 3. 헤더 규칙
+
+- 문서 제목은 # 하나만 사용
+- 헤더 레벨 건너뛰기 금지
+
+## 4. 코드 블록 규칙
+
+- 언어 명시 필수
+</code></pre>
+<h3 id="스킬-간-참조"><a class="header" href="#스킬-간-참조">스킬 간 참조</a></h3>
+<p><code>consumers</code> 필드를 통해 스킬 간 관계를 정의할 수 있다:</p>
+<pre><code>markdown-image-insertion
+    └── consumers: mdbook-docs-images skill
+         → mdbook-docs-images가 이 스킬의 규칙을 포함
+
+mdbook-docs-images
+    └── consumers: mdbook command
+         → /mdbook 명령어 실행 시 이 스킬 적용
+</code></pre>
+<h2 id="gsd-스킬-예시"><a class="header" href="#gsd-스킬-예시">GSD 스킬 예시</a></h2>
+<p>GSD 프레임워크는 12개의 방법론 스킬을 정의한다:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>스킬</th><th>용도</th></tr>
+</thead>
+<tbody>
+<tr><td><code>atomic-git-workflow</code></td><td>태스크별 커밋 전략</td></tr>
+<tr><td><code>verify-goal-backward</code></td><td>목표에서 역추적하여 검증</td></tr>
+<tr><td><code>wave-executor</code></td><td>의존성 기반 병렬 실행</td></tr>
+<tr><td><code>deviation-classifier</code></td><td>실행 중 이탈 분류</td></tr>
+<tr><td><code>checkpoint-and-state-save</code></td><td>상태 저장/복원</td></tr>
+<tr><td><code>resolve-model-profile</code></td><td>모델 선택 로직</td></tr>
+</tbody>
+</table>
+</div>
+<p>이 스킬들은 에이전트의 frontmatter에서 참조된다:</p>
+<pre><code class="language-yaml"># agents/gsd-executor.md frontmatter
+skills_integration:
+  - atomic-git-workflow
+  - deviation-classifier
+  - checkpoint-and-state-save
+</code></pre>
+<h2 id="skill-작성-가이드"><a class="header" href="#skill-작성-가이드">Skill 작성 가이드</a></h2>
+<h3 id="1-trigger를-명확히-정의한다"><a class="header" href="#1-trigger를-명확히-정의한다">1. trigger를 명확히 정의한다</a></h3>
+<pre><code class="language-yaml">trigger: Markdown 문서를 생성·편집할 때 자동 적용
+</code></pre>
+<p>Claude가 “지금 이 스킬을 적용해야 하나?“를 판단하는 기준이 된다.</p>
+<h3 id="2-규칙은-절대-규칙으로-작성한다"><a class="header" href="#2-규칙은-절대-규칙으로-작성한다">2. 규칙은 “절대 규칙“으로 작성한다</a></h3>
+<pre><code class="language-markdown">이 문서를 **절대 규칙(spec)** 으로 사용한다.
+</code></pre>
+<p>“권장“이 아니라 “강제“로 작성해야 Claude가 일관되게 따른다.</p>
+<h3 id="3-검증-체크리스트를-포함한다"><a class="header" href="#3-검증-체크리스트를-포함한다">3. 검증 체크리스트를 포함한다</a></h3>
+<pre><code class="language-markdown">## 자체 검증 체크리스트
+
+- [ ] 모든 이미지가 images/ 상대경로인가?
+- [ ] alt text가 의미를 설명하는가?
+</code></pre>
+<p>Claude가 출력 전에 스스로 검증하는 기준을 제공한다.</p>
+<h3 id="4-허용금지를-명시한다"><a class="header" href="#4-허용금지를-명시한다">4. 허용/금지를 명시한다</a></h3>
+<pre><code class="language-markdown">| 구분 | 허용 | 금지 |
+|----|----|----|
+| 상대경로 | images/a.png | /images/a.png |
+| HTML | 명시적 요청 시만 | 자발적 사용 |
+</code></pre>
+<p>모호함을 줄여 일관성을 높인다.</p>
+<h3 id="5-파일명에-용도를-담는다"><a class="header" href="#5-파일명에-용도를-담는다">5. 파일명에 용도를 담는다</a></h3>
+<pre><code>markdown-image-insertion.skill.md   → 이미지 삽입 규칙
+mdbook-docs-images.skill.md         → mdBook 문서 규칙
+</code></pre>
+<p><code>.skill.md</code> 접미사로 일반 문서와 구분할 수 있다 (선택사항).</p>
+<h2 id="다음-장-3"><a class="header" href="#다음-장-3">다음 장</a></h2>
+<ul>
+<li><a href="#chapter-5-agents-에이전트">Chapter 5: Agents 에이전트</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="chapter-5-agents-에이전트"><a class="header" href="#chapter-5-agents-에이전트">Chapter 5: Agents (에이전트)</a></h1>
+<h2 id="agents란"><a class="header" href="#agents란">Agents란?</a></h2>
+<p>Agents는 <strong>독립적으로 실행되는 AI 서브프로세스</strong>다.
+Claude Code의 <code>Task</code> 도구로 spawn되어 특정 역할을 수행한 뒤 결과를 반환한다.</p>
+<pre><code>Command  → 사용자가 실행하는 대화형 명령
+Skill    → Claude가 자동 적용하는 규칙
+Agent    → 독립 실행되는 AI 서브프로세스 (spawn/return)
+</code></pre>
+<h3 id="agent-vs-command"><a class="header" href="#agent-vs-command">Agent vs Command</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>항목</th><th>Command</th><th>Agent</th></tr>
+</thead>
+<tbody>
+<tr><td>실행</td><td>사용자가 <code>/명령</code> 입력</td><td>다른 명령/워크플로우가 Task로 spawn</td></tr>
+<tr><td>컨텍스트</td><td>현재 대화 맥락 유지</td><td><strong>새로운 컨텍스트</strong>에서 독립 실행</td></tr>
+<tr><td>도구</td><td>모든 도구 사용 가능</td><td>frontmatter에 정의된 도구만</td></tr>
+<tr><td>결과</td><td>대화에 직접 출력</td><td>결과를 호출자에게 반환</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="agent-vs-hook"><a class="header" href="#agent-vs-hook">Agent vs Hook</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>항목</th><th>Agent</th><th>Hook</th></tr>
+</thead>
+<tbody>
+<tr><td>실행 환경</td><td>AI 모델 (Claude)</td><td>Node.js 스크립트</td></tr>
+<tr><td>지능</td><td>AI가 판단하며 실행</td><td>정해진 로직만 실행</td></tr>
+<tr><td>용도</td><td>복잡한 분석/생성 작업</td><td>이벤트 기반 자동화</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="agent-파일-구조"><a class="header" href="#agent-파일-구조">Agent 파일 구조</a></h2>
+<p><code>.claude/agents/</code> 디렉토리에 Markdown 파일로 정의한다.</p>
+<h3 id="기본-구조-2"><a class="header" href="#기본-구조-2">기본 구조</a></h3>
+<pre><code class="language-markdown">---
+name: agent-name
+description: 에이전트가 하는 일 설명
+tools: Read, Write, Edit, Bash, Grep, Glob
+color: green
+spawned_by:
+  - /gsd:plan-phase
+  - /gsd:plan-milestone-gaps
+skills_integration:
+  - superpowers:brainstorming
+  - gsd:atomic-git-workflow
+---
+
+&lt;skills_reference&gt;
+이 에이전트가 사용하는 스킬 참조 설명
+&lt;/skills_reference&gt;
+
+&lt;role&gt;
+에이전트의 역할과 책임 설명
+&lt;/role&gt;
+
+&lt;execution_flow&gt;
+실행 순서와 로직
+&lt;/execution_flow&gt;
+</code></pre>
+<h3 id="frontmatter-필드-1"><a class="header" href="#frontmatter-필드-1">Frontmatter 필드</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>필드</th><th>필수</th><th>설명</th></tr>
+</thead>
+<tbody>
+<tr><td><code>name</code></td><td>O</td><td>에이전트 식별자 (kebab-case)</td></tr>
+<tr><td><code>description</code></td><td>O</td><td>Task 도구에서 표시될 설명</td></tr>
+<tr><td><code>tools</code></td><td>O</td><td>사용 가능한 도구 목록 (쉼표 구분)</td></tr>
+<tr><td><code>color</code></td><td>선택</td><td>UI 표시 색상</td></tr>
+<tr><td><code>spawned_by</code></td><td>권장</td><td>이 에이전트를 spawn하는 명령/워크플로우</td></tr>
+<tr><td><code>skills_integration</code></td><td>선택</td><td>참조할 스킬 목록</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="사용-가능한-도구"><a class="header" href="#사용-가능한-도구">사용 가능한 도구</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>도구</th><th>용도</th></tr>
+</thead>
+<tbody>
+<tr><td><code>Read</code></td><td>파일 읽기</td></tr>
+<tr><td><code>Write</code></td><td>파일 쓰기</td></tr>
+<tr><td><code>Edit</code></td><td>파일 수정</td></tr>
+<tr><td><code>Bash</code></td><td>명령 실행</td></tr>
+<tr><td><code>Grep</code></td><td>내용 검색</td></tr>
+<tr><td><code>Glob</code></td><td>파일 패턴 검색</td></tr>
+<tr><td><code>WebFetch</code></td><td>웹 페이지 접근</td></tr>
+<tr><td><code>WebSearch</code></td><td>웹 검색</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="실전-예시-gsd-에이전트-시스템"><a class="header" href="#실전-예시-gsd-에이전트-시스템">실전 예시: GSD 에이전트 시스템</a></h2>
+<p>GSD 프레임워크는 11개의 전문화된 에이전트로 구성된다.</p>
+<h3 id="핵심-에이전트-3개"><a class="header" href="#핵심-에이전트-3개">핵심 에이전트 3개</a></h3>
+<h4 id="1-gsd-planner-계획-수립"><a class="header" href="#1-gsd-planner-계획-수립">1. gsd-planner (계획 수립)</a></h4>
+<pre><code class="language-yaml">---
+name: gsd-planner
+description: Creates executable phase plans with task breakdown and dependency analysis
+tools: Read, Write, Bash, Glob, Grep, WebFetch
+spawned_by:
+  - /gsd:plan-phase
+skills_integration:
+  - superpowers:brainstorming
+  - superpowers:writing-plans
+---
+</code></pre>
+<p><strong>역할:</strong> Phase를 실행 가능한 Plan으로 분해한다.</p>
+<pre><code>Phase "사용자 인증 구현"
+    ↓ gsd-planner
+Plan 1: JWT 토큰 구현 (Wave 1)
+Plan 2: 로그인 API 구현 (Wave 1)
+Plan 3: 미들웨어 통합 (Wave 2, Plan 1·2에 의존)
+</code></pre>
+<h4 id="2-gsd-executor-실행"><a class="header" href="#2-gsd-executor-실행">2. gsd-executor (실행)</a></h4>
+<pre><code class="language-yaml">---
+name: gsd-executor
+description: Executes plans with atomic commits and deviation handling
+tools: Read, Write, Edit, Bash, Grep, Glob
+spawned_by:
+  - /gsd:execute-phase
+skills_integration:
+  - superpowers:test-driven-development
+  - gsd:atomic-git-workflow
+  - gsd:deviation-classifier
+---
+</code></pre>
+<p><strong>역할:</strong> Plan의 각 task를 실행하고 태스크별 커밋을 생성한다.</p>
+<h4 id="3-gsd-verifier-검증"><a class="header" href="#3-gsd-verifier-검증">3. gsd-verifier (검증)</a></h4>
+<pre><code class="language-yaml">---
+name: gsd-verifier
+description: Validates code against phase goals using goal-backward analysis
+tools: Read, Bash, Grep, Glob
+spawned_by:
+  - verify-phase workflow
+skills_integration:
+  - gsd:verify-goal-backward
+---
+</code></pre>
+<p><strong>역할:</strong> 빌드된 코드가 Phase 목표를 달성했는지 검증한다.</p>
+<h3 id="전체-에이전트-맵"><a class="header" href="#전체-에이전트-맵">전체 에이전트 맵</a></h3>
+<pre><code>/gsd:new-project
+    ├─ gsd-project-researcher (x4, 병렬)
+    ├─ gsd-research-synthesizer
+    └─ gsd-roadmapper
+
+/gsd:plan-phase
+    ├─ gsd-phase-researcher (선택)
+    ├─ gsd-planner
+    └─ gsd-plan-checker (선택)
+
+/gsd:execute-phase
+    └─ gsd-executor (plan별 spawn)
+
+verify-phase workflow
+    └─ gsd-verifier
+
+/gsd:map-codebase
+    └─ gsd-codebase-mapper (병렬)
+
+/gsd:audit-milestone
+    └─ gsd-integration-checker
+
+/gsd:debug
+    └─ gsd-debugger
+</code></pre>
+<h2 id="agent-작성-가이드"><a class="header" href="#agent-작성-가이드">Agent 작성 가이드</a></h2>
+<h3 id="1-role을-구체적으로-정의한다"><a class="header" href="#1-role을-구체적으로-정의한다">1. role을 구체적으로 정의한다</a></h3>
+<pre><code class="language-markdown">&lt;role&gt;
+You are a GSD plan executor.
+Your job: Execute the plan completely, commit each task,
+create SUMMARY.md, update STATE.md.
+&lt;/role&gt;
+</code></pre>
+<p>에이전트는 <strong>새로운 컨텍스트</strong>에서 실행되므로, 역할과 책임을 명확히 써야 한다.</p>
+<h3 id="2-tools는-최소한으로-제한한다"><a class="header" href="#2-tools는-최소한으로-제한한다">2. tools는 최소한으로 제한한다</a></h3>
+<pre><code class="language-yaml"># 검증 에이전트 - 읽기 전용
+tools: Read, Bash, Grep, Glob
+
+# 실행 에이전트 - 쓰기 포함
+tools: Read, Write, Edit, Bash, Grep, Glob
+</code></pre>
+<p>불필요한 도구를 제거하면 에이전트가 역할을 벗어나지 않는다.</p>
+<h3 id="3-skills_integration으로-방법론을-주입한다"><a class="header" href="#3-skills_integration으로-방법론을-주입한다">3. skills_integration으로 방법론을 주입한다</a></h3>
+<pre><code class="language-yaml">skills_integration:
+  - superpowers:test-driven-development   # TDD 방법론
+  - gsd:atomic-git-workflow               # 태스크별 커밋
+</code></pre>
+<p>에이전트가 어떤 <strong>방식으로</strong> 작업해야 하는지를 스킬로 정의한다.</p>
+<h3 id="4-execution_flow로-실행-순서를-명시한다"><a class="header" href="#4-execution_flow로-실행-순서를-명시한다">4. execution_flow로 실행 순서를 명시한다</a></h3>
+<pre><code class="language-markdown">&lt;execution_flow&gt;
+
+&lt;step name="load_state" priority="first"&gt;
+1. STATE.md 읽기
+2. 현재 위치 파악
+&lt;/step&gt;
+
+&lt;step name="execute_tasks"&gt;
+1. Plan의 각 task 순서대로 실행
+2. task마다 atomic commit
+&lt;/step&gt;
+
+&lt;step name="create_summary" priority="last"&gt;
+1. SUMMARY.md 생성
+2. STATE.md 업데이트
+&lt;/step&gt;
+
+&lt;/execution_flow&gt;
+</code></pre>
+<h3 id="5-에이전트-간-데이터-전달은-파일로"><a class="header" href="#5-에이전트-간-데이터-전달은-파일로">5. 에이전트 간 데이터 전달은 파일로</a></h3>
+<p>에이전트는 독립 프로세스이므로 <strong>파일</strong>을 통해 데이터를 주고받는다:</p>
+<pre><code>gsd-planner → PLAN.md → gsd-executor → SUMMARY.md → gsd-verifier
+</code></pre>
+<h2 id="다음-장-4"><a class="header" href="#다음-장-4">다음 장</a></h2>
+<ul>
+<li><a href="#chapter-6-hooks-훅">Chapter 6: Hooks 훅</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="chapter-6-hooks-훅"><a class="header" href="#chapter-6-hooks-훅">Chapter 6: Hooks (훅)</a></h1>
+<h2 id="hooks란"><a class="header" href="#hooks란">Hooks란?</a></h2>
+<p>Hooks는 <strong>이벤트 발생 시 자동 실행되는 스크립트</strong>다.
+Claude Code 세션의 특정 시점에 Node.js 스크립트를 실행하여 자동화를 구현한다.</p>
+<pre><code>Command  → 사용자가 실행
+Skill    → Claude가 자동 적용하는 규칙
+Agent    → AI 서브프로세스
+Hook     → 이벤트 트리거 스크립트 (Node.js)
+</code></pre>
+<h3 id="핵심-차이-agent-vs-hook"><a class="header" href="#핵심-차이-agent-vs-hook">핵심 차이: Agent vs Hook</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>항목</th><th>Agent</th><th>Hook</th></tr>
+</thead>
+<tbody>
+<tr><td>실행 환경</td><td>AI 모델 (Claude)</td><td>Node.js 런타임</td></tr>
+<tr><td>지능</td><td>AI가 판단하며 실행</td><td>정해진 로직만 실행</td></tr>
+<tr><td>속도</td><td>느림 (AI 추론 필요)</td><td>빠름 (직접 실행)</td></tr>
+<tr><td>용도</td><td>복잡한 분석/생성</td><td>단순 자동화/데이터 수집</td></tr>
+<tr><td>비용</td><td>API 토큰 소비</td><td>무료</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>원칙: “단순한 건 Hook, 판단이 필요한 건 Agent”</strong></p>
+<h2 id="hook-등록-방법"><a class="header" href="#hook-등록-방법">Hook 등록 방법</a></h2>
+<p><code>settings.json</code>에 이벤트별로 등록한다:</p>
+<pre><code class="language-json">{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/my-hook.js"
+          }
+        ]
+      }
+    ]
+  }
+}
+</code></pre>
+<h3 id="지원-이벤트"><a class="header" href="#지원-이벤트">지원 이벤트</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>이벤트</th><th>발생 시점</th><th>용도</th></tr>
+</thead>
+<tbody>
+<tr><td><code>SessionStart</code></td><td>세션 시작</td><td>버전 체크, 환경 초기화</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="statusline-특수-훅"><a class="header" href="#statusline-특수-훅">statusLine (특수 훅)</a></h3>
+<p>상태줄은 별도 설정으로 등록한다:</p>
+<pre><code class="language-json">{
+  "statusLine": {
+    "type": "command",
+    "command": "node .claude/hooks/statusline.js"
+  }
+}
+</code></pre>
+<p>statusLine 스크립트는 <strong>주기적으로 실행</strong>되어 상태줄에 정보를 표시한다.</p>
+<h2 id="실전-예시-1-gsd-check-updatejs"><a class="header" href="#실전-예시-1-gsd-check-updatejs">실전 예시 1: gsd-check-update.js</a></h2>
+<p>세션 시작 시 GSD 업데이트를 확인하는 훅.</p>
+<h3 id="동작-흐름"><a class="header" href="#동작-흐름">동작 흐름</a></h3>
+<pre><code>세션 시작
+  │
+  ├─ 캐시 확인 (24시간 TTL)
+  │   ├─ 유효 → 종료 (중복 체크 방지)
+  │   └─ 만료 → 계속
+  │
+  ├─ 현재 버전 읽기 (.claude/get-shit-done/VERSION)
+  │
+  ├─ npm에서 최신 버전 조회 (백그라운드)
+  │
+  └─ 결과를 캐시에 저장
+      └─ ~/.claude/cache/gsd-update-check.json
+</code></pre>
+<h3 id="핵심-코드-패턴"><a class="header" href="#핵심-코드-패턴">핵심 코드 패턴</a></h3>
+<pre><code class="language-javascript">#!/usr/bin/env node
+
+const fs = require('fs');
+const path = require('path');
+const os = require('os');
+const { spawn } = require('child_process');
+
+const homeDir = os.homedir();
+const cacheDir = path.join(homeDir, '.claude', 'cache');
+const cacheFile = path.join(cacheDir, 'gsd-update-check.json');
+const CACHE_TTL_SECONDS = 24 * 60 * 60; // 24시간
+
+// 캐시 유효성 확인
+function isCacheValid() {
+  if (!fs.existsSync(cacheFile)) return false;
+  const cache = JSON.parse(fs.readFileSync(cacheFile, 'utf8'));
+  const age = Math.floor(Date.now() / 1000) - (cache.checked || 0);
+  return age &lt; CACHE_TTL_SECONDS;
+}
+
+// 캐시가 유효하면 건너뛰기
+if (isCacheValid()) process.exit(0);
+
+// 백그라운드에서 체크 (세션 시작을 블로킹하지 않음)
+const child = spawn(process.execPath, ['-e', `
+  // npm에서 최신 버전 조회
+  const latest = execSync('npm view get-shit-done-cc version').trim();
+
+  // 결과 캐시에 저장
+  fs.writeFileSync(cacheFile, JSON.stringify({
+    update_available: compareVersions(installed, latest),
+    installed, latest,
+    checked: Math.floor(Date.now() / 1000)
+  }));
+`], { stdio: 'ignore', detached: true });
+
+child.unref(); // 메인 프로세스와 분리
+</code></pre>
+<h3 id="설계-포인트"><a class="header" href="#설계-포인트">설계 포인트</a></h3>
+<ol>
+<li><strong>캐시 TTL</strong>: 24시간마다 한 번만 체크 (불필요한 네트워크 요청 방지)</li>
+<li><strong>백그라운드 실행</strong>: <code>spawn</code> + <code>detached</code> + <code>unref()</code>로 세션 시작을 블로킹하지 않음</li>
+<li><strong>Graceful fallback</strong>: 네트워크 오류 시 조용히 실패</li>
+</ol>
+<h2 id="실전-예시-2-gsd-statuslinejs"><a class="header" href="#실전-예시-2-gsd-statuslinejs">실전 예시 2: gsd-statusline.js</a></h2>
+<p>상태줄에 프로젝트 정보를 표시하는 훅.</p>
+<h3 id="표시-항목"><a class="header" href="#표시-항목">표시 항목</a></h3>
+<pre><code>⬆ Opus4.5 │ Writing tests │ P03/07 45% │ ~/project │ ███░░ 30% │ 5h 15% │ 7d 8%
+</code></pre>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>항목</th><th>소스</th><th>설명</th></tr>
+</thead>
+<tbody>
+<tr><td><code>⬆</code></td><td>update cache</td><td>GSD 업데이트 가능</td></tr>
+<tr><td><code>Opus4.5</code></td><td>stdin (model)</td><td>현재 모델</td></tr>
+<tr><td><code>Writing tests</code></td><td>todos JSON</td><td>진행 중 태스크</td></tr>
+<tr><td><code>P03/07 45%</code></td><td>STATE.md</td><td>GSD phase 진행률</td></tr>
+<tr><td><code>~/project</code></td><td>stdin (cwd)</td><td>작업 디렉토리</td></tr>
+<tr><td><code>███░░ 30%</code></td><td>stdin (context)</td><td>컨텍스트 윈도우 사용률</td></tr>
+<tr><td><code>5h 15%</code></td><td>API</td><td>5시간 사용량</td></tr>
+<tr><td><code>7d 8%</code></td><td>API</td><td>7일 사용량</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="입력출력"><a class="header" href="#입력출력">입력/출력</a></h3>
+<p>statusLine 스크립트는 <strong>stdin으로 JSON을 받고 stdout으로 결과를 출력</strong>한다:</p>
+<pre><code class="language-javascript">let input = '';
+process.stdin.setEncoding('utf8');
+process.stdin.on('data', chunk =&gt; input += chunk);
+process.stdin.on('end', async () =&gt; {
+  const data = JSON.parse(input);
+  // data.model, data.cwd, data.context_window 등
+
+  const output = buildStatusLine(data);
+  process.stdout.write(output);
+});
+</code></pre>
+<h3 id="색상-표시"><a class="header" href="#색상-표시">색상 표시</a></h3>
+<p>ANSI 이스케이프 코드로 터미널 색상을 적용한다:</p>
+<pre><code class="language-javascript">const green  = s =&gt; `\x1b[32m${s}\x1b[39m`;
+const yellow = s =&gt; `\x1b[33m${s}\x1b[39m`;
+const red    = s =&gt; `\x1b[31m${s}\x1b[39m`;
+const dim    = s =&gt; `\x1b[2m${s}\x1b[22m`;
+
+// 사용량에 따라 색상 변경
+function colorByPercent(percent) {
+  if (percent &gt;= 90) return red;
+  if (percent &gt;= 70) return yellow;
+  return green;
+}
+</code></pre>
+<h2 id="hook-작성-가이드"><a class="header" href="#hook-작성-가이드">Hook 작성 가이드</a></h2>
+<h3 id="1-항상-usrbinenv-node-으로-시작"><a class="header" href="#1-항상-usrbinenv-node-으로-시작">1. 항상 <code>#!/usr/bin/env node</code> 으로 시작</a></h3>
+<pre><code class="language-javascript">#!/usr/bin/env node
+</code></pre>
+<h3 id="2-빠르게-종료한다"><a class="header" href="#2-빠르게-종료한다">2. 빠르게 종료한다</a></h3>
+<p>Hook은 세션 시작이나 상태줄 갱신을 블로킹하므로 가능한 빠르게 실행해야 한다.
+오래 걸리는 작업은 <code>spawn</code> + <code>detached</code> + <code>unref()</code>로 백그라운드 처리한다.</p>
+<h3 id="3-캐시를-활용한다"><a class="header" href="#3-캐시를-활용한다">3. 캐시를 활용한다</a></h3>
+<pre><code class="language-javascript">const CACHE_TTL = 24 * 60 * 60; // 24시간
+const cacheFile = path.join(os.homedir(), '.claude', 'cache', 'my-cache.json');
+
+if (isCacheValid()) process.exit(0); // 캐시 유효하면 건너뛰기
+</code></pre>
+<h3 id="4-오류를-조용히-처리한다"><a class="header" href="#4-오류를-조용히-처리한다">4. 오류를 조용히 처리한다</a></h3>
+<p>Hook 오류가 세션을 망가뜨리면 안 된다:</p>
+<pre><code class="language-javascript">try {
+  // 메인 로직
+} catch (err) {
+  // 로깅만 하고 종료
+  logger.error('hook-name', 'Error', err);
+}
+</code></pre>
+<h3 id="5-로거를-활용한다"><a class="header" href="#5-로거를-활용한다">5. 로거를 활용한다</a></h3>
+<pre><code class="language-javascript">let logger;
+try {
+  logger = require('./gsd-logger');
+} catch {
+  logger = { info: () =&gt; {}, error: () =&gt; {}, debug: () =&gt; {} };
+}
+</code></pre>
+<h2 id="hook-파일-배치"><a class="header" href="#hook-파일-배치">Hook 파일 배치</a></h2>
+<pre><code>.claude/hooks/
+├── gsd-check-update.js   # SessionStart 훅
+├── gsd-statusline.js     # statusLine 훅
+├── gsd-config.js         # 설정 유틸리티 (다른 훅에서 require)
+└── gsd-logger.js         # 로깅 유틸리티
+</code></pre>
+<ul>
+<li>훅 파일은 <code>hooks/</code> 디렉토리에 배치</li>
+<li>유틸리티 파일도 같은 디렉토리에 두어 <code>require('./gsd-logger')</code> 가능</li>
+</ul>
+<h2 id="다음-장-5"><a class="header" href="#다음-장-5">다음 장</a></h2>
+<ul>
+<li><a href="#chapter-7-실전-활용-사례">Chapter 7: 실전 활용 사례</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="chapter-7-실전-활용-사례"><a class="header" href="#chapter-7-실전-활용-사례">Chapter 7: 실전 활용 사례</a></h1>
+<h2 id="langtutorial-프로젝트-분석"><a class="header" href="#langtutorial-프로젝트-분석">LangTutorial 프로젝트 분석</a></h2>
+<p>LangTutorial은 F# + FsLexYacc로 프로그래밍 언어를 만드는 튜토리얼 프로젝트다.
+이 프로젝트가 <code>.claude/</code>를 어떻게 활용하는지 분석한다.</p>
+<h2 id="사례-1-프로젝트-전용-command---tutorial"><a class="header" href="#사례-1-프로젝트-전용-command---tutorial">사례 1: 프로젝트 전용 Command - /tutorial</a></h2>
+<h3 id="문제"><a class="header" href="#문제">문제</a></h3>
+<p>튜토리얼은 6개 chapter + 3개 appendix로 구성된다.
+각 문서의 작성 상태를 추적하고, 일관된 형식으로 작성하고, PDF로 변환해야 한다.</p>
+<h3 id="해결"><a class="header" href="#해결">해결</a></h3>
+<p><code>/tutorial</code> 명령어를 만들어 문서 관리 전체를 자동화했다.</p>
+<pre><code class="language-markdown"># Tutorial Command (.claude/commands/tutorial.md)
+
+## 문서 구조
+
+| Chapter | 파일명 | 내용 |
+|---------|--------|------|
+| 1 | chapter-01-foundation.md | .NET 10 + FsLexYacc 설정 |
+| 2 | chapter-02-arithmetic.md | 사칙연산 인터프리터 |
+| ... | ... | ... |
+
+## 인자 처리
+
+| 명령 | 설명 |
+|------|------|
+| `/tutorial` | 문서 목록 및 상태 표시 |
+| `/tutorial 2` | chapter 2 작성 시작 |
+| `/tutorial pdf` | 전체 PDF 생성 |
+| `/tutorial tag 1.0` | tutorial-v1.0 태그 생성 |
+</code></pre>
+<h3 id="핵심-기법"><a class="header" href="#핵심-기법">핵심 기법</a></h3>
+<ol>
+<li><strong>프로젝트 지식 캡슐화</strong>: CLI 인터페이스(<code>--expr</code>, <code>--emit-tokens</code>), 테스트 도구(Expecto, FsCheck) 등 프로젝트 고유 지식을 명령어에 담음</li>
+<li><strong>다중 서브커맨드</strong>: 하나의 명령어에 목록 보기, 작성, PDF 변환, 태깅 등 여러 기능</li>
+<li><strong>작성 가이드 포함</strong>: “Examples 섹션 반드시 포함”, “코드는 입력 → 출력 형식” 등 문서 품질 규칙</li>
+</ol>
+<h2 id="사례-2-프로젝트-전용-skill---이미지-규칙"><a class="header" href="#사례-2-프로젝트-전용-skill---이미지-규칙">사례 2: 프로젝트 전용 Skill - 이미지 규칙</a></h2>
+<h3 id="문제-1"><a class="header" href="#문제-1">문제</a></h3>
+<p>Claude가 Markdown 문서를 작성할 때 이미지 처리 방식이 일관되지 않았다:</p>
+<ul>
+<li>절대경로 사용</li>
+<li>HTML <code>&lt;img&gt;</code> 태그 남용</li>
+<li>alt text 누락</li>
+<li>mdBook에서 깨지는 문법</li>
+</ul>
+<h3 id="해결-1"><a class="header" href="#해결-1">해결</a></h3>
+<p>두 개의 스킬을 만들어 <strong>자동으로</strong> 규칙을 강제했다.</p>
+<h4 id="markdown-image-insertionskillmd"><a class="header" href="#markdown-image-insertionskillmd">markdown-image-insertion.skill.md</a></h4>
+<pre><code class="language-yaml">---
+name: markdown-image-insertion
+description: Markdown 문서 내 이미지 삽입 규칙을 강제
+trigger: Markdown 문서를 생성·편집할 때 자동 적용
+consumers:
+  - 문서 작성 작업
+  - mdbook-docs-images skill
+---
+</code></pre>
+<p><strong>핵심 규칙:</strong></p>
+<ul>
+<li>상대경로만 허용 (<code>images/a.png</code> O, <code>/images/a.png</code> X)</li>
+<li>HTML 사용 금지 (명시적 요청 시만 예외)</li>
+<li>이미지 설계 주석을 HTML 코멘트로 남김</li>
+</ul>
+<h4 id="mdbook-docs-imagesskillmd"><a class="header" href="#mdbook-docs-imagesskillmd">mdbook-docs-images.skill.md</a></h4>
+<pre><code class="language-yaml">---
+name: mdbook-docs-images
+description: mdBook 문서 작성 시 규칙을 강제
+trigger: mdBook 기반 문서를 생성·편집할 때 자동 적용
+consumers:
+  - mdbook command
+---
+</code></pre>
+<p><strong>mdBook 전용 추가 규칙:</strong></p>
+<ul>
+<li>모든 문서를 SUMMARY.md에 등록</li>
+<li>헤더 레벨 건너뛰기 금지</li>
+<li>코드 블록에 언어 명시 필수</li>
+</ul>
+<h3 id="핵심-기법-skill-계층-구조"><a class="header" href="#핵심-기법-skill-계층-구조">핵심 기법: Skill 계층 구조</a></h3>
+<pre><code>markdown-image-insertion (기본 이미지 규칙)
+    └── mdbook-docs-images (mdBook 전용 확장)
+         └── /mdbook command (명령어에서 참조)
+</code></pre>
+<p>기본 스킬을 만들고, 그 위에 특화 스킬을 쌓는 <strong>계층 구조</strong>다.</p>
+<h2 id="사례-3-howto---세션-지식-추출"><a class="header" href="#사례-3-howto---세션-지식-추출">사례 3: /howto - 세션 지식 추출</a></h2>
+<h3 id="문제-2"><a class="header" href="#문제-2">문제</a></h3>
+<p>Claude와 작업하면서 배운 것들이 세션이 끝나면 사라진다.</p>
+<h3 id="해결-2"><a class="header" href="#해결-2">해결</a></h3>
+<p><code>/howto</code> 명령어로 세션에서 학습한 내용을 구조화된 문서로 추출한다.</p>
+<pre><code>작업 세션 진행
+    ↓
+/howto scan        → 세션 분석, 문서화할 주제 발견
+    ↓
+/howto             → 문서 목록 + TODO 확인
+    ↓
+/howto next        → TODO에서 문서 생성
+    ↓
+docs/howto/setup-fslexyacc-pipeline.md  ← 결과
+</code></pre>
+<h3 id="핵심-기법-품질-필터"><a class="header" href="#핵심-기법-품질-필터">핵심 기법: 품질 필터</a></h3>
+<p>모든 것을 문서화하지 않는다. 4가지 기준 중 2개 이상 충족해야 문서화한다:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>기준</th><th>설명</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Non-Googleable</strong></td><td>검색으로 쉽게 안 나오는 것</td></tr>
+<tr><td><strong>Hard-Won</strong></td><td>디버깅/삽질 끝에 얻은 통찰</td></tr>
+<tr><td><strong>Actionable</strong></td><td>정확히 무엇을 어디서 하는지</td></tr>
+<tr><td><strong>Reusable</strong></td><td>반복해서 쓸 수 있는 패턴</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="문서-템플릿-insight--approach--example"><a class="header" href="#문서-템플릿-insight--approach--example">문서 템플릿: Insight → Approach → Example</a></h3>
+<pre><code class="language-markdown"># 제목
+
+## The Insight
+무엇을 깨달았나? (코드가 아니라 멘탈 모델)
+
+## Why This Matters
+모르면 뭐가 잘못되나?
+
+## Recognition Pattern
+이 지식이 필요한 상황을 어떻게 알아채나?
+
+## The Approach
+어떻게 생각하고 접근하나?
+
+## Example
+원리를 설명하는 코드
+</code></pre>
+<h2 id="사례-4-submodule-관리---claude-config"><a class="header" href="#사례-4-submodule-관리---claude-config">사례 4: Submodule 관리 - /claude-config</a></h2>
+<h3 id="문제-3"><a class="header" href="#문제-3">문제</a></h3>
+<p><code>.claude/</code>가 submodule이므로 변경 시 submodule과 부모 저장소 모두 커밋/push해야 한다.</p>
+<h3 id="해결-3"><a class="header" href="#해결-3">해결</a></h3>
+<p><code>/claude-config</code> 명령어로 submodule 관리를 자동화했다.</p>
+<pre><code>/claude-config         → 상태 확인
+/claude-config push    → submodule commit + push + 부모 업데이트
+/claude-config pull    → submodule 최신화 + 부모 업데이트
+</code></pre>
+<h2 id="나만의-claude-만들기-단계별-가이드"><a class="header" href="#나만의-claude-만들기-단계별-가이드">나만의 .claude/ 만들기: 단계별 가이드</a></h2>
+<h3 id="step-1-기본-구조-생성"><a class="header" href="#step-1-기본-구조-생성">Step 1: 기본 구조 생성</a></h3>
+<pre><code class="language-bash">mkdir -p .claude/commands .claude/skills .claude/hooks
+echo '{}' &gt; .claude/settings.json
+echo 'settings.local.json' &gt; .claude/.gitignore
+</code></pre>
+<h3 id="step-2-첫-command-만들기"><a class="header" href="#step-2-첫-command-만들기">Step 2: 첫 Command 만들기</a></h3>
+<p>프로젝트에서 자주 하는 작업을 명령어로 만든다.</p>
+<pre><code class="language-markdown"># .claude/commands/deploy.md
+---
+allowed-tools: Bash, Read
+description: 프로덕션 배포
+---
+
+## Step 1: 테스트 실행
+npm test 실행하고 결과 확인
+
+## Step 2: 빌드
+npm run build 실행
+
+## Step 3: 배포
+배포 명령 실행 전 사용자에게 확인
+</code></pre>
+<h3 id="step-3-반복되는-규칙을-skill로"><a class="header" href="#step-3-반복되는-규칙을-skill로">Step 3: 반복되는 규칙을 Skill로</a></h3>
+<p>Claude가 자꾸 틀리는 것을 스킬로 고정한다.</p>
+<pre><code class="language-markdown"># .claude/skills/api-conventions.skill.md
+---
+name: api-conventions
+description: API 응답 형식 규칙
+trigger: API 엔드포인트를 작성할 때 자동 적용
+---
+
+## 응답 형식
+
+모든 API 응답은 다음 형식을 따른다:
+
+{
+  "success": true,
+  "data": { ... },
+  "error": null
+}
+
+## 에러 응답
+
+{
+  "success": false,
+  "data": null,
+  "error": { "code": "NOT_FOUND", "message": "..." }
+}
+</code></pre>
+<h3 id="step-4-자동화할-것을-hook으로"><a class="header" href="#step-4-자동화할-것을-hook으로">Step 4: 자동화할 것을 Hook으로</a></h3>
+<p>세션 시작 시 자동 실행할 스크립트를 만든다.</p>
+<pre><code class="language-javascript">// .claude/hooks/check-env.js
+#!/usr/bin/env node
+const fs = require('fs');
+
+if (!fs.existsSync('.env')) {
+  console.error('WARNING: .env file missing!');
+  console.error('Copy .env.example to .env and fill in values.');
+}
+</code></pre>
+<pre><code class="language-json">// settings.json
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          { "type": "command", "command": "node .claude/hooks/check-env.js" }
+        ]
+      }
+    ]
+  }
+}
+</code></pre>
+<h3 id="step-5-다른-프로젝트에서-재사용"><a class="header" href="#step-5-다른-프로젝트에서-재사용">Step 5: 다른 프로젝트에서 재사용</a></h3>
+<p>범용 설정을 submodule로 분리한다:</p>
+<pre><code class="language-bash"># 별도 저장소로 분리
+cd .claude &amp;&amp; git init &amp;&amp; git remote add origin &lt;url&gt;
+git add -A &amp;&amp; git commit -m "initial" &amp;&amp; git push
+
+# 다른 프로젝트에서 사용
+git submodule add &lt;url&gt; .claude
+</code></pre>
+<h2 id="요약-언제-무엇을-쓰는가"><a class="header" href="#요약-언제-무엇을-쓰는가">요약: 언제 무엇을 쓰는가</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>상황</th><th>사용할 것</th><th>예시</th></tr>
+</thead>
+<tbody>
+<tr><td>자주 실행하는 워크플로우</td><td><strong>Command</strong></td><td><code>/commit</code>, <code>/deploy</code>, <code>/tutorial</code></td></tr>
+<tr><td>Claude가 따라야 할 규칙</td><td><strong>Skill</strong></td><td>이미지 규칙, API 형식, 코딩 컨벤션</td></tr>
+<tr><td>복잡한 자동화 태스크</td><td><strong>Agent</strong></td><td>계획 수립, 코드 실행, 검증</td></tr>
+<tr><td>세션 이벤트 자동화</td><td><strong>Hook</strong></td><td>버전 체크, 환경 확인, 상태줄</td></tr>
+<tr><td>전역 설정</td><td><strong>settings.json</strong></td><td>hooks, statusLine</td></tr>
+<tr><td>로컬 권한</td><td><strong>settings.local.json</strong></td><td>허용 명령어</td></tr>
+</tbody>
+</table>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-c2a407aa.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-a0b12cfe.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+
+    </div>
+    </body>
+</html>
