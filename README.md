@@ -8,7 +8,8 @@ Claude Code를 위한 체계적인 프로젝트 관리 워크플로우 시스템
 
 ## Documentation
 
-[Claude Code Tutorial](https://ohama.github.io/MyGsd/)
+- [Claude Code Tutorial](https://ohama.github.io/MyGsd/) (온라인)
+- [Claude Code Tutorial](docs/index.html) (로컬)
 
 ## 개요
 

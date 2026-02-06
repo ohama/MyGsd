@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>소개 - Claude Code Tutorial</title>
+        <title>실전 활용 사례 - Claude Code Tutorial</title>
 
 
         <!-- Custom HTML head -->
@@ -12,33 +12,33 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon-de23e50b.svg">
-        <link rel="shortcut icon" href="favicon-8114d1fc.png">
-        <link rel="stylesheet" href="css/variables-8adf115d.css">
-        <link rel="stylesheet" href="css/general-2459343d.css">
-        <link rel="stylesheet" href="css/chrome-ae938929.css">
-        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+        <link rel="icon" href="../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../css/general-2459343d.css">
+        <link rel="stylesheet" href="../css/chrome-ae938929.css">
+        <link rel="stylesheet" href="../css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+        <link rel="stylesheet" href="../fonts/fonts-9644e21d.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
-        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
-        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "";
+            const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-7e563f5c.js";
+            window.path_to_searchindex_js = "../searchindex-7e563f5c.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-24771767.js"></script>
+        <script src="../toc-24771767.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -105,7 +105,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
             </noscript>
             <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -140,7 +140,7 @@
                     <h1 class="menu-title">Claude Code Tutorial</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
                         </a>
 
@@ -174,37 +174,255 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="claude-code-tutorial"><a class="header" href="#claude-code-tutorial">Claude Code Tutorial</a></h1>
-<p>Claude Code의 .claude/ 디렉토리 설정 및 활용 가이드</p>
-<h2 id="목차"><a class="header" href="#목차">목차</a></h2>
-<p>이 가이드는 두 가지 형식으로 제공됩니다:</p>
-<h3 id="tutorial-문서"><a class="header" href="#tutorial-문서">Tutorial (문서)</a></h3>
-<p><code>.claude/</code> 디렉토리의 각 구성 요소를 체계적으로 설명하는 문서입니다.</p>
+                        <h1 id="chapter-7-실전-활용-사례"><a class="header" href="#chapter-7-실전-활용-사례">Chapter 7: 실전 활용 사례</a></h1>
+<h2 id="langtutorial-프로젝트-분석"><a class="header" href="#langtutorial-프로젝트-분석">LangTutorial 프로젝트 분석</a></h2>
+<p>LangTutorial은 F# + FsLexYacc로 프로그래밍 언어를 만드는 튜토리얼 프로젝트다.
+이 프로젝트가 <code>.claude/</code>를 어떻게 활용하는지 분석한다.</p>
+<h2 id="사례-1-프로젝트-전용-command---tutorial"><a class="header" href="#사례-1-프로젝트-전용-command---tutorial">사례 1: 프로젝트 전용 Command - /tutorial</a></h2>
+<h3 id="문제"><a class="header" href="#문제">문제</a></h3>
+<p>튜토리얼은 6개 chapter + 3개 appendix로 구성된다.
+각 문서의 작성 상태를 추적하고, 일관된 형식으로 작성하고, PDF로 변환해야 한다.</p>
+<h3 id="해결"><a class="header" href="#해결">해결</a></h3>
+<p><code>/tutorial</code> 명령어를 만들어 문서 관리 전체를 자동화했다.</p>
+<pre><code class="language-markdown"># Tutorial Command (.claude/commands/tutorial.md)
+
+## 문서 구조
+
+| Chapter | 파일명 | 내용 |
+|---------|--------|------|
+| 1 | chapter-01-foundation.md | .NET 10 + FsLexYacc 설정 |
+| 2 | chapter-02-arithmetic.md | 사칙연산 인터프리터 |
+| ... | ... | ... |
+
+## 인자 처리
+
+| 명령 | 설명 |
+|------|------|
+| `/tutorial` | 문서 목록 및 상태 표시 |
+| `/tutorial 2` | chapter 2 작성 시작 |
+| `/tutorial pdf` | 전체 PDF 생성 |
+| `/tutorial tag 1.0` | tutorial-v1.0 태그 생성 |
+</code></pre>
+<h3 id="핵심-기법"><a class="header" href="#핵심-기법">핵심 기법</a></h3>
+<ol>
+<li><strong>프로젝트 지식 캡슐화</strong>: CLI 인터페이스(<code>--expr</code>, <code>--emit-tokens</code>), 테스트 도구(Expecto, FsCheck) 등 프로젝트 고유 지식을 명령어에 담음</li>
+<li><strong>다중 서브커맨드</strong>: 하나의 명령어에 목록 보기, 작성, PDF 변환, 태깅 등 여러 기능</li>
+<li><strong>작성 가이드 포함</strong>: “Examples 섹션 반드시 포함”, “코드는 입력 → 출력 형식” 등 문서 품질 규칙</li>
+</ol>
+<h2 id="사례-2-프로젝트-전용-skill---이미지-규칙"><a class="header" href="#사례-2-프로젝트-전용-skill---이미지-규칙">사례 2: 프로젝트 전용 Skill - 이미지 규칙</a></h2>
+<h3 id="문제-1"><a class="header" href="#문제-1">문제</a></h3>
+<p>Claude가 Markdown 문서를 작성할 때 이미지 처리 방식이 일관되지 않았다:</p>
 <ul>
-<li><a href="tutorial/01-overview.html">.claude/ 디렉토리 개요</a>부터 시작하세요.</li>
+<li>절대경로 사용</li>
+<li>HTML <code>&lt;img&gt;</code> 태그 남용</li>
+<li>alt text 누락</li>
+<li>mdBook에서 깨지는 문법</li>
 </ul>
-<h3 id="youtube-영상-스크립트"><a class="header" href="#youtube-영상-스크립트">YouTube (영상 스크립트)</a></h3>
-<p>같은 내용을 영상 형식으로 구성한 스크립트입니다.</p>
+<h3 id="해결-1"><a class="header" href="#해결-1">해결</a></h3>
+<p>두 개의 스킬을 만들어 <strong>자동으로</strong> 규칙을 강제했다.</p>
+<h4 id="markdown-image-insertionskillmd"><a class="header" href="#markdown-image-insertionskillmd">markdown-image-insertion.skill.md</a></h4>
+<pre><code class="language-yaml">---
+name: markdown-image-insertion
+description: Markdown 문서 내 이미지 삽입 규칙을 강제
+trigger: Markdown 문서를 생성·편집할 때 자동 적용
+consumers:
+  - 문서 작성 작업
+  - mdbook-docs-images skill
+---
+</code></pre>
+<p><strong>핵심 규칙:</strong></p>
 <ul>
-<li><a href="youtube/ep01-intro.html">EP01: .claude/ 디렉토리 소개</a>부터 시작하세요.</li>
+<li>상대경로만 허용 (<code>images/a.png</code> O, <code>/images/a.png</code> X)</li>
+<li>HTML 사용 금지 (명시적 요청 시만 예외)</li>
+<li>이미지 설계 주석을 HTML 코멘트로 남김</li>
 </ul>
-<h2 id="핵심-메시지"><a class="header" href="#핵심-메시지">핵심 메시지</a></h2>
-<blockquote>
-<p><strong>Claude의 행동을 코드로 정의한다.</strong></p>
-</blockquote>
-<p><code>.claude/</code> 폴더 하나로:</p>
+<h4 id="mdbook-docs-imagesskillmd"><a class="header" href="#mdbook-docs-imagesskillmd">mdbook-docs-images.skill.md</a></h4>
+<pre><code class="language-yaml">---
+name: mdbook-docs-images
+description: mdBook 문서 작성 시 규칙을 강제
+trigger: mdBook 기반 문서를 생성·편집할 때 자동 적용
+consumers:
+  - mdbook command
+---
+</code></pre>
+<p><strong>mdBook 전용 추가 규칙:</strong></p>
 <ul>
-<li>반복 설명 없이 일관된 동작</li>
-<li>여러 프로젝트에서 설정 재사용</li>
-<li>팀 전체가 동일한 규칙 적용</li>
+<li>모든 문서를 SUMMARY.md에 등록</li>
+<li>헤더 레벨 건너뛰기 금지</li>
+<li>코드 블록에 언어 명시 필수</li>
 </ul>
+<h3 id="핵심-기법-skill-계층-구조"><a class="header" href="#핵심-기법-skill-계층-구조">핵심 기법: Skill 계층 구조</a></h3>
+<pre><code>markdown-image-insertion (기본 이미지 규칙)
+    └── mdbook-docs-images (mdBook 전용 확장)
+         └── /mdbook command (명령어에서 참조)
+</code></pre>
+<p>기본 스킬을 만들고, 그 위에 특화 스킬을 쌓는 <strong>계층 구조</strong>다.</p>
+<h2 id="사례-3-howto---세션-지식-추출"><a class="header" href="#사례-3-howto---세션-지식-추출">사례 3: /howto - 세션 지식 추출</a></h2>
+<h3 id="문제-2"><a class="header" href="#문제-2">문제</a></h3>
+<p>Claude와 작업하면서 배운 것들이 세션이 끝나면 사라진다.</p>
+<h3 id="해결-2"><a class="header" href="#해결-2">해결</a></h3>
+<p><code>/howto</code> 명령어로 세션에서 학습한 내용을 구조화된 문서로 추출한다.</p>
+<pre><code>작업 세션 진행
+    ↓
+/howto scan        → 세션 분석, 문서화할 주제 발견
+    ↓
+/howto             → 문서 목록 + TODO 확인
+    ↓
+/howto next        → TODO에서 문서 생성
+    ↓
+docs/howto/setup-fslexyacc-pipeline.md  ← 결과
+</code></pre>
+<h3 id="핵심-기법-품질-필터"><a class="header" href="#핵심-기법-품질-필터">핵심 기법: 품질 필터</a></h3>
+<p>모든 것을 문서화하지 않는다. 4가지 기준 중 2개 이상 충족해야 문서화한다:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>기준</th><th>설명</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Non-Googleable</strong></td><td>검색으로 쉽게 안 나오는 것</td></tr>
+<tr><td><strong>Hard-Won</strong></td><td>디버깅/삽질 끝에 얻은 통찰</td></tr>
+<tr><td><strong>Actionable</strong></td><td>정확히 무엇을 어디서 하는지</td></tr>
+<tr><td><strong>Reusable</strong></td><td>반복해서 쓸 수 있는 패턴</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="문서-템플릿-insight--approach--example"><a class="header" href="#문서-템플릿-insight--approach--example">문서 템플릿: Insight → Approach → Example</a></h3>
+<pre><code class="language-markdown"># 제목
+
+## The Insight
+무엇을 깨달았나? (코드가 아니라 멘탈 모델)
+
+## Why This Matters
+모르면 뭐가 잘못되나?
+
+## Recognition Pattern
+이 지식이 필요한 상황을 어떻게 알아채나?
+
+## The Approach
+어떻게 생각하고 접근하나?
+
+## Example
+원리를 설명하는 코드
+</code></pre>
+<h2 id="사례-4-submodule-관리---claude-config"><a class="header" href="#사례-4-submodule-관리---claude-config">사례 4: Submodule 관리 - /claude-config</a></h2>
+<h3 id="문제-3"><a class="header" href="#문제-3">문제</a></h3>
+<p><code>.claude/</code>가 submodule이므로 변경 시 submodule과 부모 저장소 모두 커밋/push해야 한다.</p>
+<h3 id="해결-3"><a class="header" href="#해결-3">해결</a></h3>
+<p><code>/claude-config</code> 명령어로 submodule 관리를 자동화했다.</p>
+<pre><code>/claude-config         → 상태 확인
+/claude-config push    → submodule commit + push + 부모 업데이트
+/claude-config pull    → submodule 최신화 + 부모 업데이트
+</code></pre>
+<h2 id="나만의-claude-만들기-단계별-가이드"><a class="header" href="#나만의-claude-만들기-단계별-가이드">나만의 .claude/ 만들기: 단계별 가이드</a></h2>
+<h3 id="step-1-기본-구조-생성"><a class="header" href="#step-1-기본-구조-생성">Step 1: 기본 구조 생성</a></h3>
+<pre><code class="language-bash">mkdir -p .claude/commands .claude/skills .claude/hooks
+echo '{}' &gt; .claude/settings.json
+echo 'settings.local.json' &gt; .claude/.gitignore
+</code></pre>
+<h3 id="step-2-첫-command-만들기"><a class="header" href="#step-2-첫-command-만들기">Step 2: 첫 Command 만들기</a></h3>
+<p>프로젝트에서 자주 하는 작업을 명령어로 만든다.</p>
+<pre><code class="language-markdown"># .claude/commands/deploy.md
+---
+allowed-tools: Bash, Read
+description: 프로덕션 배포
+---
+
+## Step 1: 테스트 실행
+npm test 실행하고 결과 확인
+
+## Step 2: 빌드
+npm run build 실행
+
+## Step 3: 배포
+배포 명령 실행 전 사용자에게 확인
+</code></pre>
+<h3 id="step-3-반복되는-규칙을-skill로"><a class="header" href="#step-3-반복되는-규칙을-skill로">Step 3: 반복되는 규칙을 Skill로</a></h3>
+<p>Claude가 자꾸 틀리는 것을 스킬로 고정한다.</p>
+<pre><code class="language-markdown"># .claude/skills/api-conventions.skill.md
+---
+name: api-conventions
+description: API 응답 형식 규칙
+trigger: API 엔드포인트를 작성할 때 자동 적용
+---
+
+## 응답 형식
+
+모든 API 응답은 다음 형식을 따른다:
+
+{
+  "success": true,
+  "data": { ... },
+  "error": null
+}
+
+## 에러 응답
+
+{
+  "success": false,
+  "data": null,
+  "error": { "code": "NOT_FOUND", "message": "..." }
+}
+</code></pre>
+<h3 id="step-4-자동화할-것을-hook으로"><a class="header" href="#step-4-자동화할-것을-hook으로">Step 4: 자동화할 것을 Hook으로</a></h3>
+<p>세션 시작 시 자동 실행할 스크립트를 만든다.</p>
+<pre><code class="language-javascript">// .claude/hooks/check-env.js
+#!/usr/bin/env node
+const fs = require('fs');
+
+if (!fs.existsSync('.env')) {
+  console.error('WARNING: .env file missing!');
+  console.error('Copy .env.example to .env and fill in values.');
+}
+</code></pre>
+<pre><code class="language-json">// settings.json
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          { "type": "command", "command": "node .claude/hooks/check-env.js" }
+        ]
+      }
+    ]
+  }
+}
+</code></pre>
+<h3 id="step-5-다른-프로젝트에서-재사용"><a class="header" href="#step-5-다른-프로젝트에서-재사용">Step 5: 다른 프로젝트에서 재사용</a></h3>
+<p>범용 설정을 submodule로 분리한다:</p>
+<pre><code class="language-bash"># 별도 저장소로 분리
+cd .claude &amp;&amp; git init &amp;&amp; git remote add origin &lt;url&gt;
+git add -A &amp;&amp; git commit -m "initial" &amp;&amp; git push
+
+# 다른 프로젝트에서 사용
+git submodule add &lt;url&gt; .claude
+</code></pre>
+<h2 id="요약-언제-무엇을-쓰는가"><a class="header" href="#요약-언제-무엇을-쓰는가">요약: 언제 무엇을 쓰는가</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>상황</th><th>사용할 것</th><th>예시</th></tr>
+</thead>
+<tbody>
+<tr><td>자주 실행하는 워크플로우</td><td><strong>Command</strong></td><td><code>/commit</code>, <code>/deploy</code>, <code>/tutorial</code></td></tr>
+<tr><td>Claude가 따라야 할 규칙</td><td><strong>Skill</strong></td><td>이미지 규칙, API 형식, 코딩 컨벤션</td></tr>
+<tr><td>복잡한 자동화 태스크</td><td><strong>Agent</strong></td><td>계획 수립, 코드 실행, 검증</td></tr>
+<tr><td>세션 이벤트 자동화</td><td><strong>Hook</strong></td><td>버전 체크, 환경 확인, 상태줄</td></tr>
+<tr><td>전역 설정</td><td><strong>settings.json</strong></td><td>hooks, statusLine</td></tr>
+<tr><td>로컬 권한</td><td><strong>settings.local.json</strong></td><td>허용 명령어</td></tr>
+</tbody>
+</table>
+</div>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../tutorial/06-hooks.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
 
-                            <a rel="next prefetch" href="tutorial/01-overview.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../youtube/ep01-intro.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -214,8 +432,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../tutorial/06-hooks.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
 
-                    <a rel="next prefetch" href="tutorial/01-overview.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../youtube/ep01-intro.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>
@@ -235,13 +456,13 @@
         </script>
 
 
-        <script src="elasticlunr-ef4e11c1.min.js"></script>
-        <script src="mark-09e88c2c.min.js"></script>
-        <script src="searcher-c2a407aa.js"></script>
+        <script src="../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../mark-09e88c2c.min.js"></script>
+        <script src="../searcher-c2a407aa.js"></script>
 
-        <script src="clipboard-1626706a.min.js"></script>
-        <script src="highlight-abc7f01d.js"></script>
-        <script src="book-a0b12cfe.js"></script>
+        <script src="../clipboard-1626706a.min.js"></script>
+        <script src="../highlight-abc7f01d.js"></script>
+        <script src="../book-a0b12cfe.js"></script>
 
         <!-- Custom JS scripts -->
 

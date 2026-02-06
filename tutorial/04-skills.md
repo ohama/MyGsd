@@ -150,6 +150,76 @@ mdbook-docs-images
          → /mdbook 명령어 실행 시 이 스킬 적용
 ```
 
+## 실전 예시 3: mdbook-utils (공통 유틸리티)
+
+여러 Command가 **공유하는 로직**을 Skill로 분리한 예시다.
+
+```markdown
+---
+name: mdbook-utils
+description: mdBook 공통 유틸리티 (설치 확인, book.toml 탐지, SUMMARY 동기화)
+---
+
+## 사용 커맨드
+
+- `/pages` — mdBook 설정 및 CI 구성
+- `/mdbook` — 로컬 빌드/서브/클린/싱크
+
+---
+
+## 1. mdbook 설치 확인
+
+which mdbook || echo "NOT_INSTALLED"
+
+설치 안 됨 → 안내:
+  cargo install mdbook
+  brew install mdbook  # macOS
+  sudo apt install mdbook  # Ubuntu
+
+---
+
+## 2. book.toml 탐지
+
+### 인자가 있는 경우
+[ -f "{DIR}/book.toml" ] && echo "FOUND"
+
+### 인자가 없는 경우
+find . -maxdepth 2 -name "book.toml" -type f
+
+---
+
+## 3. SUMMARY.md 동기화
+
+1. SUMMARY.md에서 링크된 .md 파일 추출
+2. 디렉토리의 실제 .md 파일 목록과 비교
+3. 차이 표시 및 업데이트 제안
+
+---
+
+## 4. 빌드 명령
+
+mdbook clean {DIR}
+mdbook build {DIR}
+```
+
+### 이 스킬의 효과
+
+- `/pages`와 `/mdbook` 모두 **동일한 설치 확인 로직** 사용
+- book.toml 탐지 로직이 **한 곳에서 관리**됨
+- 새로운 mdBook 관련 명령어 추가 시 **재사용 가능**
+
+### Command에서 Skill 참조
+
+```markdown
+<skills_reference>
+이 커맨드는 `mdbook-utils` 스킬을 사용한다:
+- mdbook 설치 확인
+- book.toml 탐지
+- SUMMARY.md 동기화
+- 빌드 명령
+</skills_reference>
+```
+
 ## GSD 스킬 예시
 
 GSD 프레임워크는 12개의 방법론 스킬을 정의한다:

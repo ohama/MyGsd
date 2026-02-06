@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>소개 - Claude Code Tutorial</title>
+        <title>EP02: Settings 설정 - Claude Code Tutorial</title>
 
 
         <!-- Custom HTML head -->
@@ -12,33 +12,33 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon-de23e50b.svg">
-        <link rel="shortcut icon" href="favicon-8114d1fc.png">
-        <link rel="stylesheet" href="css/variables-8adf115d.css">
-        <link rel="stylesheet" href="css/general-2459343d.css">
-        <link rel="stylesheet" href="css/chrome-ae938929.css">
-        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+        <link rel="icon" href="../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../css/general-2459343d.css">
+        <link rel="stylesheet" href="../css/chrome-ae938929.css">
+        <link rel="stylesheet" href="../css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+        <link rel="stylesheet" href="../fonts/fonts-9644e21d.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
-        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
-        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "";
+            const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-7e563f5c.js";
+            window.path_to_searchindex_js = "../searchindex-7e563f5c.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-24771767.js"></script>
+        <script src="../toc-24771767.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -105,7 +105,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
             </noscript>
             <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -140,7 +140,7 @@
                     <h1 class="menu-title">Claude Code Tutorial</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
                         </a>
 
@@ -174,37 +174,217 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="claude-code-tutorial"><a class="header" href="#claude-code-tutorial">Claude Code Tutorial</a></h1>
-<p>Claude Code의 .claude/ 디렉토리 설정 및 활용 가이드</p>
-<h2 id="목차"><a class="header" href="#목차">목차</a></h2>
-<p>이 가이드는 두 가지 형식으로 제공됩니다:</p>
-<h3 id="tutorial-문서"><a class="header" href="#tutorial-문서">Tutorial (문서)</a></h3>
-<p><code>.claude/</code> 디렉토리의 각 구성 요소를 체계적으로 설명하는 문서입니다.</p>
-<ul>
-<li><a href="tutorial/01-overview.html">.claude/ 디렉토리 개요</a>부터 시작하세요.</li>
-</ul>
-<h3 id="youtube-영상-스크립트"><a class="header" href="#youtube-영상-스크립트">YouTube (영상 스크립트)</a></h3>
-<p>같은 내용을 영상 형식으로 구성한 스크립트입니다.</p>
-<ul>
-<li><a href="youtube/ep01-intro.html">EP01: .claude/ 디렉토리 소개</a>부터 시작하세요.</li>
-</ul>
-<h2 id="핵심-메시지"><a class="header" href="#핵심-메시지">핵심 메시지</a></h2>
+                        <h1 id="ep02-settings-설정-파일"><a class="header" href="#ep02-settings-설정-파일">EP02: Settings 설정 파일</a></h1>
+<h2 id="메타-정보"><a class="header" href="#메타-정보">메타 정보</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>항목</th><th>내용</th></tr>
+</thead>
+<tbody>
+<tr><td>영상 길이</td><td>6-8분</td></tr>
+<tr><td>대상</td><td>Claude Code 사용자</td></tr>
+<tr><td>핵심 메시지</td><td>settings.json은 공유, settings.local.json은 로컬 전용</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="인트로-20초"><a class="header" href="#인트로-20초">인트로 (20초)</a></h2>
+<p><strong>[화면: 두 개의 JSON 파일 아이콘]</strong></p>
 <blockquote>
-<p><strong>Claude의 행동을 코드로 정의한다.</strong></p>
+<p>.claude/ 시리즈 두 번째 영상입니다.
+오늘은 <strong>설정 파일 두 개</strong>의 차이점과 활용법을 알아봅니다.</p>
+<p>왜 굳이 두 개로 나눠놨을까요?</p>
 </blockquote>
-<p><code>.claude/</code> 폴더 하나로:</p>
+<hr>
+<h2 id="본론-1-두-파일의-역할-1분"><a class="header" href="#본론-1-두-파일의-역할-1분">본론 1: 두 파일의 역할 (1분)</a></h2>
+<p><strong>[화면: 테이블 그래픽]</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>파일</th><th>Git</th><th>용도</th></tr>
+</thead>
+<tbody>
+<tr><td><code>settings.json</code></td><td>공유됨</td><td>hooks, 상태줄</td></tr>
+<tr><td><code>settings.local.json</code></td><td>gitignore</td><td>권한 설정</td></tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p><code>settings.json</code>은 팀원 모두가 공유하는 설정입니다.
+세션 시작 시 실행할 훅, 상태줄에 뭘 보여줄지 정의합니다.</p>
+<p><code>settings.local.json</code>은 <strong>내 컴퓨터에서만</strong> 적용되는 설정입니다.
+주로 <strong>권한</strong>을 정의합니다. “이 bash 명령어 실행해도 돼” 같은 거죠.</p>
+<p>왜 분리할까요?
+팀원 A는 npm 프로젝트를 하고, B는 dotnet 프로젝트를 합니다.
+허용할 명령어가 다르죠. 그래서 권한은 로컬에 둡니다.</p>
+</blockquote>
+<hr>
+<h2 id="본론-2-settingsjson-실전-예시-2분"><a class="header" href="#본론-2-settingsjson-실전-예시-2분">본론 2: settings.json 실전 예시 (2분)</a></h2>
+<p><strong>[화면: JSON 코드 하이라이트]</strong></p>
+<pre><code class="language-json">{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/check-update.js"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "node .claude/hooks/statusline.js"
+  }
+}
+</code></pre>
+<blockquote>
+<p>실제 사용 예시를 볼까요.</p>
+</blockquote>
+<h3 id="hooks-섹션"><a class="header" href="#hooks-섹션">hooks 섹션</a></h3>
+<blockquote>
+<p><code>hooks</code>는 특정 이벤트에 실행할 명령을 정의합니다.</p>
+<p>여기서 <code>SessionStart</code>는 Claude Code 세션이 시작될 때 실행됩니다.
+저는 버전 업데이트 체크 스크립트를 등록해뒀어요.</p>
+</blockquote>
+<p><strong>[화면: 세션 시작 → 스크립트 실행 흐름도]</strong></p>
+<h3 id="statusline-섹션"><a class="header" href="#statusline-섹션">statusLine 섹션</a></h3>
+<blockquote>
+<p><code>statusLine</code>은 Claude Code 하단 상태줄에 정보를 표시합니다.</p>
+<p>이 스크립트가 주기적으로 실행되면서 현재 작업 상태, 컨텍스트 사용률 같은 걸 보여줍니다.</p>
+</blockquote>
+<p><strong>[화면: 상태줄 스크린샷]</strong></p>
+<pre><code>Opus4.5 │ P03/07 45% │ ~/project │ ███░░ 30%
+</code></pre>
+<hr>
+<h2 id="본론-3-settingslocaljson-실전-예시-2분"><a class="header" href="#본론-3-settingslocaljson-실전-예시-2분">본론 3: settings.local.json 실전 예시 (2분)</a></h2>
+<p><strong>[화면: JSON 코드]</strong></p>
+<pre><code class="language-json">{
+  "permissions": {
+    "allow": [
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(npm run *)",
+      "Skill(commit)",
+      "Skill(push)"
+    ]
+  }
+}
+</code></pre>
+<blockquote>
+<p><code>settings.local.json</code>은 주로 <strong>permissions</strong>를 정의합니다.</p>
+</blockquote>
+<h3 id="권한-패턴-이해하기"><a class="header" href="#권한-패턴-이해하기">권한 패턴 이해하기</a></h3>
+<p><strong>[화면: 패턴별 설명 테이블]</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>패턴</th><th>의미</th></tr>
+</thead>
+<tbody>
+<tr><td><code>Bash(git add *)</code></td><td>git add 명령 허용</td></tr>
+<tr><td><code>Bash(npm run *)</code></td><td>npm 스크립트 실행 허용</td></tr>
+<tr><td><code>Skill(commit)</code></td><td>/commit 스킬 허용</td></tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>별표(*)는 와일드카드입니다.
+<code>git add *</code>는 <code>git add .</code>도, <code>git add file.js</code>도 다 허용한다는 뜻이에요.</p>
+</blockquote>
+<h3 id="자동-생성"><a class="header" href="#자동-생성">자동 생성</a></h3>
+<blockquote>
+<p>이 파일을 직접 만들 필요는 없습니다.
+Claude Code가 권한을 요청할 때 “Allow“를 누르면 자동으로 추가됩니다.</p>
+<p>다만, 팀 프로젝트에서 미리 정의해두면 매번 허용 안 눌러도 되겠죠.</p>
+</blockquote>
+<hr>
+<h2 id="본론-4-설정-우선순위-1분"><a class="header" href="#본론-4-설정-우선순위-1분">본론 4: 설정 우선순위 (1분)</a></h2>
+<p><strong>[화면: 계층 다이어그램]</strong></p>
+<pre><code>settings.local.json (높은 우선순위)
+        ↓ 덮어씀
+settings.json (기본)
+</code></pre>
+<blockquote>
+<p>두 파일에 같은 키가 있으면 어떻게 될까요?</p>
+<p><code>settings.local.json</code>이 이깁니다.
+로컬 설정이 공유 설정을 <strong>덮어씁니다</strong>.</p>
+</blockquote>
+<h3 id="예시"><a class="header" href="#예시">예시</a></h3>
+<pre><code class="language-json">// settings.json
+{ "statusLine": { "command": "node shared-status.js" } }
+
+// settings.local.json
+{ "statusLine": { "command": "node my-status.js" } }
+</code></pre>
+<blockquote>
+<p>이 경우 <code>my-status.js</code>가 실행됩니다.</p>
+</blockquote>
+<hr>
+<h2 id="본론-5-최소-설정으로-시작하기-1분"><a class="header" href="#본론-5-최소-설정으로-시작하기-1분">본론 5: 최소 설정으로 시작하기 (1분)</a></h2>
+<p><strong>[화면: 빈 JSON 파일]</strong></p>
+<blockquote>
+<p>처음에는 빈 파일로 시작해도 됩니다.</p>
+</blockquote>
+<pre><code class="language-json">{}
+</code></pre>
+<blockquote>
+<p>진짜 이게 끝이에요.
+필요할 때 하나씩 추가하면 됩니다.</p>
+</blockquote>
+<h3 id="추천-시작-설정"><a class="header" href="#추천-시작-설정">추천 시작 설정</a></h3>
+<pre><code class="language-json">{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Session started!'"
+          }
+        ]
+      }
+    ]
+  }
+}
+</code></pre>
+<blockquote>
+<p>이렇게 간단한 echo부터 시작해서, 점점 복잡한 스크립트로 발전시키세요.</p>
+</blockquote>
+<hr>
+<h2 id="아웃트로-30초"><a class="header" href="#아웃트로-30초">아웃트로 (30초)</a></h2>
+<p><strong>[화면: 다음 에피소드 미리보기]</strong></p>
+<blockquote>
+<p>오늘은 설정 파일 두 개의 역할을 알아봤습니다.</p>
 <ul>
-<li>반복 설명 없이 일관된 동작</li>
-<li>여러 프로젝트에서 설정 재사용</li>
-<li>팀 전체가 동일한 규칙 적용</li>
+<li><code>settings.json</code>: 팀 공유 설정 (hooks, statusLine)</li>
+<li><code>settings.local.json</code>: 내 컴퓨터 전용 (permissions)</li>
+</ul>
+<p>다음 영상에서는 <strong>Commands</strong>, 슬래시 명령어를 직접 만들어봅니다.
+<code>/commit</code>, <code>/push</code> 같은 명령어를 어떻게 정의하는지 알려드릴게요.</p>
+<p>구독과 좋아요 부탁드립니다!</p>
+</blockquote>
+<hr>
+<h2 id="편집-노트"><a class="header" href="#편집-노트">편집 노트</a></h2>
+<ul>
+<li>JSON 코드는 syntax highlighting 적용</li>
+<li>설정 우선순위는 애니메이션으로 덮어쓰기 시각화</li>
+<li>상태줄 스크린샷은 실제 터미널 캡처</li>
 </ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../youtube/ep01-intro.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
 
-                            <a rel="next prefetch" href="tutorial/01-overview.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../youtube/ep03-commands.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -214,8 +394,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../youtube/ep01-intro.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
 
-                    <a rel="next prefetch" href="tutorial/01-overview.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../youtube/ep03-commands.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>
@@ -235,13 +418,13 @@
         </script>
 
 
-        <script src="elasticlunr-ef4e11c1.min.js"></script>
-        <script src="mark-09e88c2c.min.js"></script>
-        <script src="searcher-c2a407aa.js"></script>
+        <script src="../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../mark-09e88c2c.min.js"></script>
+        <script src="../searcher-c2a407aa.js"></script>
 
-        <script src="clipboard-1626706a.min.js"></script>
-        <script src="highlight-abc7f01d.js"></script>
-        <script src="book-a0b12cfe.js"></script>
+        <script src="../clipboard-1626706a.min.js"></script>
+        <script src="../highlight-abc7f01d.js"></script>
+        <script src="../book-a0b12cfe.js"></script>
 
         <!-- Custom JS scripts -->
 

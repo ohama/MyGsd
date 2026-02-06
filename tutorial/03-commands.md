@@ -11,7 +11,8 @@ Commands는 사용자가 `/명령어`로 실행하는 **대화형 명령**이다
 ├── push.md            → /push
 ├── release.md         → /release
 ├── howto.md           → /howto
-├── tutorial.md        → /tutorial
+├── pages.md           → /pages (mdBook + CI 설정)
+├── mdbook.md          → /mdbook (로컬 빌드)
 └── gsd/               → /gsd:* (하위 디렉토리 = 네임스페이스)
     ├── plan-phase.md  → /gsd:plan-phase
     ├── execute-phase.md → /gsd:execute-phase
@@ -111,7 +112,96 @@ Conventional Commits 형식으로 자동 생성
 - `<execution>`: Step별 실행 순서
 - `<examples>`: 입출력 예시
 
-## 실전 예시 2: /tutorial (프로젝트 전용)
+## 실전 예시 2: /pages + /mdbook (배포 방식 선택)
+
+같은 기능(mdBook 사이트 배포)을 **다른 방식**으로 제공하는 두 명령어다.
+
+```markdown
+/pages   → CI 자동 빌드 (GitHub Actions가 빌드)
+/mdbook  → 로컬 빌드 (직접 빌드 후 커밋)
+```
+
+### /pages (CI 기반)
+
+```markdown
+---
+allowed-tools: Read, Write, Edit, Bash, Glob, AskUserQuestion
+description: mdBook 프로젝트 설정 및 GitHub Pages 배포 준비 (CI 자동 빌드)
+---
+
+<role>
+mdBook 설정 도우미. CI가 빌드하므로 로컬 빌드는 하지 않는다.
+</role>
+
+<execution>
+## Step 1: 디렉토리 스캔
+## Step 2: 프로젝트 정보 수집
+## Step 3: book.toml, SUMMARY.md 생성
+## Step 4: GitHub Actions 워크플로우 생성
+## Step 5: README.md에 Pages URL 추가
+</execution>
+```
+
+### /mdbook (로컬 빌드)
+
+```markdown
+---
+allowed-tools: Read, Write, Edit, Bash, Glob, AskUserQuestion
+description: mdBook 로컬 빌드 및 정적 배포 (CI 없이 직접 커밋)
+---
+
+<role>
+mdBook 로컬 빌드 도우미. docs/를 직접 커밋하여 배포한다.
+</role>
+
+<commands>
+| 명령 | 설명 |
+|------|------|
+| `/mdbook init <dir>` | 초기화 (CI 없이) |
+| `/mdbook build [dir]` | 로컬 빌드 |
+| `/mdbook serve [dir]` | 개발 서버 |
+| `/mdbook sync [dir]` | SUMMARY.md 동기화 |
+</commands>
+```
+
+### 공통 로직은 Skill로 분리
+
+두 명령어 모두 같은 작업(mdbook 설치 확인, book.toml 탐지, 빌드)이 필요하다.
+**공통 로직을 Skill로 분리**하여 중복을 제거한다:
+
+```markdown
+# mdbook-utils.skill.md
+
+## 1. mdbook 설치 확인
+which mdbook || echo "NOT_INSTALLED"
+
+## 2. book.toml 탐지
+[ -f "{DIR}/book.toml" ] && echo "FOUND"
+
+## 3. SUMMARY.md 동기화
+...
+
+## 4. 빌드 명령
+mdbook clean {DIR}
+mdbook build {DIR}
+```
+
+Command 파일에서 Skill을 참조한다:
+
+```markdown
+<skills_reference>
+이 커맨드는 `mdbook-utils` 스킬을 사용한다:
+- mdbook 설치 확인
+- book.toml 탐지
+- SUMMARY.md 동기화
+</skills_reference>
+```
+
+스킬에 대한 자세한 내용은 [Chapter 4: Skills](04-skills.md)를 참조한다.
+
+---
+
+## 실전 예시 3: /tutorial (프로젝트 전용)
 
 LangTutorial 프로젝트에서 만든 **프로젝트 전용 명령어**다.
 튜토리얼 문서의 목록, 작성, PDF 변환을 관리한다.
@@ -150,7 +240,7 @@ LangTutorial 프로젝트에서 만든 **프로젝트 전용 명령어**다.
 - 프로젝트 특화 지식(문서 구조, CLI 인터페이스)을 명령어에 담을 수 있다
 - 인자에 따라 다른 동작을 정의할 수 있다
 
-## 실전 예시 3: /howto (지식 관리)
+## 실전 예시 4: /howto (지식 관리)
 
 세션에서 배운 것을 문서로 기록하는 명령어.
 
