@@ -1,6 +1,6 @@
 # Claude Code Tutorial
 
-Claude Code의 .claude/ 디렉토리 설정 및 활용 가이드
+Claude Code의 `.claude/` 디렉토리 설정 및 활용 가이드
 
 ## 목차
 
